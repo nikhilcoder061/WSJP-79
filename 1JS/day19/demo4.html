@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input type="text" id="input1" onkeyup="hello()">
+    <h1 id="heading">Welcone</h1>
+</body>
+<script>
+
+    var input = document.querySelector('#input1');
+    var heading = document.querySelector('#heading');
+
+    function hello() {
+        heading.innerText = input.value
+        // console.log(input.value);
+    }
+
+</script>
+
+
+</html>

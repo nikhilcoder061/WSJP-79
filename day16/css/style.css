@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Assistant", serif;
+}
+
+.main{
+    width: 100%;
+}
+.header{
+    margin: auto;
+    width: 1400px;
+    padding: 20px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.nav-menu{
+    color: #282C3F;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    gap: 30px;
+}
+.search{
+    border-radius: 2px;
+    width: 500px;
+    padding: 10px 1px;
+    display: flex;
+    background-color: #F5F5F6;
+}
+
+.search-icon{
+    margin: 0px 15px;
+}
+
+.search input{
+    width: 400px;
+   border: none;
+   background-color: transparent;
+}
+
+.search input:focus{
+    outline: none;
+}
+
+
+.profile{
+    text-align: center;
+    font-size: 14px;
+}
+.account{
+    display: flex;
+    gap: 20px;
+}

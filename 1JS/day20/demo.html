@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .bar {
+            /* width: 200px; */
+            height: 10px;
+            /* background-color: red; */
+            border-radius: 10px;
+            margin: 5px 0px;
+            transition: 0.5s;
+            font-size: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <input type="text" name="" id="input" onkeyup="checkPasss()">
+    <div class="bar"></div>
+
+</body>
+<script>
+
+    var input = document.querySelector('#input');
+    var bar = document.querySelector('.bar');
+
+
+    function checkPasss() {
+        if (input.value.length <= 3 && input.value.length > 0) {
+            bar.style.background = 'red';
+            bar.style.width = "50px";
+            bar.innerText = "Weak"
+        } else if (input.value.length > 3 && input.value.length <= 5) {
+            bar.style.background = 'orange';
+            bar.style.width = "100px"
+            bar.innerText = "Medium"
+        } else if (input.value.length > 5 && input.value.length <= 8) {
+            bar.style.background = 'blue';
+            bar.style.width = "150px"
+            bar.innerText = "Strong"
+        } else if (input.value.length > 8) {
+            bar.style.background = 'green';
+            bar.style.width = "200"
+            bar.innerText = "Very Strong"
+        } else {
+            bar.style.background = '';
+            bar.style.width = ""
+        }
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .main {
+            width: 100vw;
+            height: 100vh;
+            background-color: lightcoral;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .faq {
+            width: 600px;
+            height: 400px;
+            background-color: white;
+            padding: 20px;
+        }
+
+        .item {
+            width: 500px;
+            border: 1px solid gray;
+            margin: 10px;
+        }
+
+        .que {
+            padding: 10px 15px;
+            background-color: gray;
+            cursor: pointer;
+        }
+
+        .ans {
+            padding: 10px 15px;
+            display: none;
+        }
+
+        .showAns {
+            display: block;
+        }
+
+        .que i {
+            transition: 0.2s;
+            float: right;
+        }
+
+        .rotateArrow {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="faq">
+            <div class="item">
+                <div class="que">
+                    What is HTML ?
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="ans">
+                    Hyper Text Markup Langauage
+                </div>
+            </div>
+            <div class="item">
+                <div class="que">
+                    What is CSS ?
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="ans">
+                    Casacading style sheet
+                </div>
+            </div>
+            <div class="item">
+                <div class="que">
+                    What is JS ?
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="ans">
+                    JS Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti dolorum qui modi dicta
+                    inventore porro earum corporis sed accusantium vero, voluptatum officia aliquid suscipit. Laudantium
+                    blanditiis obcaecati molestiae vitae eveniet.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+
+    var allQuestion = document.querySelectorAll('.que');
+    for (var question of allQuestion) {
+        question.addEventListener(
+            'click',
+            function (event) {
+                this.nextElementSibling.classList.toggle('showAns');
+                this.children[0].classList.toggle('rotateArrow');
+            }
+        )
+    }
+
+
+
+
+</script>
+
+</html>

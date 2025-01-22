@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main {
+            width: 1000px;
+            height: 500px;
+            border: 1px solid red;
+            margin: auto;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            transition: 0.5s;
+        }
+
+        .main:hover .box {
+            transform: translateX(300px)rotate(360deg)scale(1.5)skew(10deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="box"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .main {
+            width: 1000px;
+            background-color: lightblue;
+            margin: auto;
+        }
+
+        .main>ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .main li {
+            padding: 10px 0px;
+            margin: 0px 5px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .submenu {
+            position: absolute;
+            list-style: none;
+            background-color: lightcoral;
+            top: 100%;
+            opacity: 0;
+            left: -200%;
+            transition: 0.5s;
+        }
+
+        .main li:hover .submenu {
+            opacity: 1;
+            left: 0%;
+        }
+        .submenu li:hover{
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main">
+        <ul>
+            <li>Home
+
+                <ul class="submenu">
+                    <li>Node</li>
+                    <li>Python</li>
+                    <li>JavaScript</li>
+                    <li>React JS</li>
+                </ul>
+            </li>
+            <li>About</li>
+            <li>Course
+                <ul class="submenu">
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                    <li>React JS</li>
+                </ul>
+
+            </li>
+            <li>Gallrery</li>
+            <li>Contact Us</li>
+        </ul>
+    </div>
+
+</body>
+
+</html>

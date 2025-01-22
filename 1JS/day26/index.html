@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            width: 20%;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .overlay {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: orange;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            transform: scale(0);
+            transition: 0.5s;
+            font-size: 100px;
+        }
+
+        .showOverlay {
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <div class="main">
+
+    </div>
+</body>
+<script>
+
+    var main = document.querySelector('.main');
+    var overlay = document.querySelector('.overlay')
+
+    function generateColorCode() {
+        var red = Math.floor(Math.random() * 256).toString(16);
+        var green = Math.floor(Math.random() * 256).toString(16);
+        var blue = Math.floor(Math.random() * 256).toString(16);
+        var colorCode = "#" + red + green + blue;
+
+        if (colorCode.length == 7) {
+            return colorCode;
+        } else {
+            return generateColorCode()
+        }
+    }
+
+
+    for (var i = 1; i <= 25; i++) {
+
+        var finalCode = generateColorCode();
+
+        var box = document.createElement('div');
+        box.classList.add('box');
+        box.style.background = finalCode;
+        box.innerText = finalCode;
+
+        main.appendChild(box)
+
+    }
+
+    var boxes = document.querySelectorAll('.box');
+
+    for (var box of boxes) {
+        box.addEventListener('click', function () {
+            overlay.classList.add('showOverlay');
+            overlay.style.background = this.innerText;
+            overlay.innerText = this.innerText;
+            navigator.clipboard.writeText(this.innerText);
+
+            setTimeout(
+                function () {
+                    overlay.classList.remove('showOverlay');
+                }, 500
+            )
+        })
+    }
+
+
+
+
+</script>
+
+</html>

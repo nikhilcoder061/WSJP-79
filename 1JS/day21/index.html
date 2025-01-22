@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .para {
+            font-size: 25px;
+            color: white;
+            text-decoration: underline;
+            background-color: blue;
+            transition: 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="add">Add</button>
+    <button id="remove">Remove</button>
+    <button id="toggle">Toggle</button>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere illo nam ut a et suscipit ipsum fuga, assumenda
+        enim accusamus aspernatur libero placeat quod voluptate nihil. Sapiente aliquid similique totam!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere illo nam ut a et suscipit ipsum fuga, assumenda
+        enim accusamus aspernatur libero placeat quod voluptate nihil. Sapiente aliquid similique totam!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere illo nam ut a et suscipit ipsum fuga, assumenda
+        enim accusamus aspernatur libero placeat quod voluptate nihil. Sapiente aliquid similique totam!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere illo nam ut a et suscipit ipsum fuga, assumenda
+        enim accusamus aspernatur libero placeat quod voluptate nihil. Sapiente aliquid similique totam!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere illo nam ut a et suscipit ipsum fuga, assumenda
+        enim accusamus aspernatur libero placeat quod voluptate nihil. Sapiente aliquid similique totam!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere illo nam ut a et suscipit ipsum fuga, assumenda
+        enim accusamus aspernatur libero placeat quod voluptate nihil. Sapiente aliquid similique totam!
+    </p>
+</body>
+<script>
+
+    var addClass = document.querySelector('#add');
+    var removeClass = document.querySelector('#remove');
+    var toggleClass = document.querySelector('#toggle');
+    var pargraph = document.querySelector('p');
+
+    addClass.addEventListener(
+        "click",
+        function () {
+            pargraph.classList.add('para');
+        }
+    )
+
+    removeClass.addEventListener(
+        "click",
+        function () {
+            pargraph.classList.remove('para');
+        }
+    )
+
+    toggleClass.addEventListener(
+        "click",
+        function () {
+            pargraph.classList.toggle('para');
+        }
+    )
+
+
+</script>
+
+</html>

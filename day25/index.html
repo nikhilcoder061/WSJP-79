@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main {
+            width: 1000px;
+            height: 500px;
+            border: 1px solid black;
+            margin: auto;
+            position: relative;
+        }
+
+        @keyframes box1 {
+
+            0%,
+            100% {
+                transform: translate(0px, 0px);
+            }
+
+            25% {
+                transform: translate(900px, 0px);
+            }
+
+            50% {
+                transform: translate(900px, 400px);
+            }
+
+            75% {
+                transform: translate(0px, 400px);
+            }
+        }
+
+        @keyframes box2 {
+
+            0%,
+            100% {
+                transform: translate(900px, 0px);
+            }
+
+            25% {
+                transform: translate(900px, 400px);
+            }
+
+            50% {
+                transform: translate(0px, 400px);
+            }
+
+            75% {
+                transform: translate(0px, 00px);
+            }
+        }
+
+        @keyframes box3 {
+
+            0%,
+            100% {
+                transform: translate(900px, 400px);
+            }
+
+            25% {
+                transform: translate(0px, 400px);
+            }
+
+            50% {
+                transform: translate(0px, 0px);
+            }
+
+            75% {
+                transform: translate(900px, 0px);
+            }
+        }
+
+        @keyframes box4 {
+
+            0%,
+            100% {
+                transform: translate(0px, 400px);
+            }
+
+            25% {
+                transform: translate(0px, 0px);
+            }
+
+            50% {
+                transform: translate(900px, 0px);
+            }
+
+            75% {
+                transform: translate(900px, 400px);
+            }
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+
+        .box1 {
+            background-color: red;
+            animation: box1 2s 0s infinite linear alternate;
+            transform: translate(0px, 0px);
+        }
+
+        .box2 {
+            background-color: blue;
+            transform: translate(900px, 0px);
+            animation: box2 2s 0s infinite linear alternate;
+        }
+
+        .box3 {
+            background-color: orange;
+            transform: translate(900px, 400px);
+            animation: box3 2s 0s infinite linear alternate;
+        }
+
+        .box4 {
+            background-color: green;
+            transform: translate(0px, 400px);
+            animation: box4 2s 0s infinite linear alternate;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="box box1"></div>
+        <div class="box box2"></div>
+        <div class="box box3"></div>
+        <div class="box box4"></div>
+    </div>
+</body>
+
+</html>

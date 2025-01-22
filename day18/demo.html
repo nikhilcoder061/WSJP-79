@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main {
+            width: 300px;
+            height: 300px;
+            position: relative;
+        }
+
+        .img {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            transition: 0.5s;
+        }
+
+        .main:hover .img2 {
+            left: 300px;
+        }
+
+        .main:hover .img3 {
+            left: 600px;
+        }
+
+        .main:hover .img4 {
+            left: 900px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="img img1">
+            <img src="https://picsum.photos/id/231/300/300" alt="">
+        </div>
+        <div class="img img2">
+            <img src="https://picsum.photos/id/232/300/300" alt="">
+        </div>
+        <div class="img img3">
+            <img src="https://picsum.photos/id/233/300/300" alt="">
+        </div>
+        <div class="img img4">
+            <img src="https://picsum.photos/id/234/300/300" alt="">
+        </div>
+    </div>
+</body>
+
+</html>

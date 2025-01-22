@@ -1,0 +1,32 @@
+@media only screen and (min-width:991px) and (max-width:1170px){
+    .container{
+        max-width: 900px;
+    }
+}
+
+
+@media only screen and (min-width:767px) and (max-width:990px){
+    .container{
+        max-width: 700px;
+    }
+}
+
+@media only screen and (min-width:400px) and (max-width:766px){
+    .top-header{
+        display: none;
+    }
+    
+    .mainMenu{
+        display: none;
+    }
+
+    .mobileMenu{
+        display: block;
+    }
+    .menuBar{
+        display: block;
+    }
+    /* .container{
+        max-width: 700px;
+    } */
+}

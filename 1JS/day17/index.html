@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    subject 1 <input type="text" id="sub1"> <br>
+    subject 2 <input type="text" id="sub2"> <br>
+    subject 3 <input type="text" id="sub3"> <br>
+    subject 4 <input type="text" id="sub4"> <br>
+    subject 5 <input type="text" id="sub5"> <br>
+    <button onclick="calculateMarks()">Calulate</button> <br>
+    Total Marks <input type="text" id="total"> <br>
+    Percentage <input type="text" id="per"> <br>
+    Grade <input type="text" id="grade"> <br>
+
+
+</body>
+<script>
+
+    var sub1 = document.getElementById('sub1');
+    var sub2 = document.getElementById('sub2');
+    var sub3 = document.getElementById('sub3');
+    var sub4 = document.getElementById('sub4');
+    var sub5 = document.getElementById('sub5');
+    var total = document.getElementById('total')
+    var per = document.getElementById('per')
+    var grade = document.getElementById('grade');
+
+    function calculateMarks() {
+        var s1 = Number(sub1.value);
+        var s2 = Number(sub2.value);
+        var s3 = Number(sub3.value);
+        var s4 = Number(sub4.value);
+        var s5 = Number(sub5.value);
+
+        var totalMarks = s1 + s2 + s3 + s4 + s5;
+        var percentage = totalMarks * 100 / 500;
+        total.value = totalMarks;
+        per.value = percentage
+        if (percentage > 90 && percentage <= 100) {
+            grade.value = "A"
+        } else if (percentage > 70 && percentage <= 90) {
+            grade.value = "B"
+        } else if (percentage > 45 && percentage <= 70) {
+            grade.value = "C"
+        } else {
+            grade.value = "Fail"
+        }
+    }
+
+</script>
+
+</html>

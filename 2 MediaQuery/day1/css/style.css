@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    max-width: 1300px;
+    background-color: lightblue;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.box {
+    width: 23%;
+    padding: 10px;
+    background-color: orange;
+}

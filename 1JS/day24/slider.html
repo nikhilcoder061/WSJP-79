@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main {
+            width: 800px;
+            border: 2px solid black;
+            text-align: center;
+            margin: auto;
+        }
+
+        .slider {
+            display: flex;
+            overflow: hidden;
+        }
+
+        .box {
+            transition: 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="slider">
+            <div class="box">
+                <img src="https://picsum.photos/id/231/800/500" alt="">
+            </div>
+            <div class="box">
+                <img src="https://picsum.photos/id/232/800/500" alt="">
+            </div>
+            <div class="box">
+                <img src="https://picsum.photos/id/233/800/500" alt="">
+            </div>
+            <div class="box">
+                <img src="https://picsum.photos/id/234/800/500" alt="">
+            </div>
+            <div class="box">
+                <img src="https://picsum.photos/id/235/800/500" alt="">
+            </div>
+            <div class="box">
+                <img src="https://picsum.photos/id/236/800/500" alt="">
+            </div>
+        </div>
+        <div>
+            <button onclick="prev()">Previous</button>
+            <button onclick="next()">Next</button>
+        </div>
+    </div>
+</body>
+<script>
+
+    var boxes = document.querySelectorAll('.box');
+    var count = 0;
+
+    function next() {
+        if (count < boxes.length - 1) {
+            count++;
+            for (var box of boxes) {
+                box.style.transform = `translate(-${count * 100}%)`
+            }
+        }
+    }
+
+    function prev() {
+        if (count >= 1) {
+            count--;
+            for (var box of boxes) {
+                box.style.transform = `translate(-${count * 100}%)`
+            }
+        }
+    }
+
+
+
+
+</script>
+
+</html>

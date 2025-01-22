@@ -1,0 +1,14 @@
+.row1 {
+    background-color: lightblue;
+    margin: 10px 0px;
+}
+
+.column {
+    border: 1px solid red;
+    height: 50px;
+    text-align: center;
+}
+
+.row2{
+    justify-content: space-between;
+}

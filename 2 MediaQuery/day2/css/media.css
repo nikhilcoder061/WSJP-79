@@ -1,0 +1,17 @@
+@media (max-width:567px) {
+    .mobileMenu {
+        display: block;
+    }
+
+    .header {
+        width: 80vw;
+        height: 100vh;
+        position: fixed;
+        top: 60px;
+        left: 0px;
+        background-color: lightblue;
+        flex-direction: column;
+        padding: 10px 30px;
+        transform: translateX(-100%);
+    }
+}

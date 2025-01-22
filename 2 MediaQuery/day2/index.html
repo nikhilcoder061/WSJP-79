@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/media.css">
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <div class="main">
+        <div class="top">
+            WsCubeTech
+        </div>
+        <div class="mobileMenu">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="header">
+            <div class="menu">Home</div>
+            <div class="menu">About</div>
+            <div class="menu">Course</div>
+            <div class="menu">Gallery</div>
+            <div class="menu">Contact Us</div>
+        </div>
+    </div>
+    <div class="para">
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus sunt doloribus explicabo error, dolorum
+            fugit perferendis provident! Ipsa placeat corrupti consequatur cum velit recusandae dolor quis sequi porro
+            molestiae.
+        </p>
+
+    </div>
+</body>
+<script>
+
+    var header = document.querySelector(".header");
+    var btn = document.querySelector('.mobileMenu i');
+    var overlay = document.querySelector('.overlay');
+    var body = document.querySelector('body');
+
+
+    function mobileMenu() {
+        header.classList.toggle('showMenu');
+        btn.classList.toggle('fa-bars');
+        btn.classList.toggle('fa-xmark');
+        overlay.classList.toggle('showOverlay');
+        body.classList.toggle('stop-scroll');
+    }
+
+    btn.addEventListener('click', mobileMenu);
+    overlay.addEventListener('click', mobileMenu);
+
+
+</script>
+
+</html>

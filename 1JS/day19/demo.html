@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main {
+            width: 1000px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            border: 1px solid black;
+            text-align: center;
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="box">Welcome</div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <button onclick="move()">Button</button>
+    </div>
+</body>
+<script>
+
+    var boxes = document.getElementsByClassName('box');
+
+    function move() {
+        if (boxes[0].innerText != '') {
+            boxes[1].innerText = boxes[0].innerText;
+            boxes[0].innerText = "";
+        } else if (boxes[1].innerText != "") {
+            boxes[2].innerText = boxes[1].innerText;
+            boxes[1].innerText = "";
+        } else if (boxes[2].innerText != "") {
+            boxes[0].innerText = boxes[2].innerText;
+            boxes[2].innerText = "";
+        }
+    }
+
+
+
+
+</script>
+
+</html>

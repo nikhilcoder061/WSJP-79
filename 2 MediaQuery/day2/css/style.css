@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.main {
+    margin: auto;
+    max-width: 1000px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    position: sticky;
+    top: 0px;
+    background-color: white;
+}
+
+.header {
+    transition: 0.2s;
+    display: flex;
+    gap: 30px;
+
+}
+
+.mobileMenu {
+    display: none;
+}
+
+.showMenu {
+    transform: translateX(0%) !important;
+}
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 60px;
+    left: 0;
+    display: none;
+}
+
+.showOverlay {
+    display: block !important;
+}
+
+.para {
+    font-size: 25px;
+    text-align: justify;
+    padding: 10px;
+}
+
+.stop-scroll {
+    overflow: hidden;
+}

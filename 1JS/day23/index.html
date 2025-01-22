@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .main {
+            width: 100vw;
+            height: 100vh;
+            background-color: lightseagreen;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .todo {
+            width: 600px;
+            height: 500px;
+            background-color: white;
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .input input {
+            width: 400px;
+            padding: 10px;
+        }
+
+        .input button {
+            padding: 10px;
+            background-color: lightseagreen;
+            border: none;
+            cursor: pointer;
+        }
+
+        .allTodo {
+            width: 100%;
+            height: 400px;
+        }
+
+        .allList {
+            /* margin: 10px; */
+            list-style: none;
+        }
+
+        .allList li {
+            padding: 10px 15px;
+            background-color: lightseagreen;
+            margin: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .doneToDo {
+            background-color: gray !important;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="todo">
+            <div class="allTodo">
+                <div class="input">
+                    <input type="text" id="input">
+                    <button id="btn">Add Todo</button>
+                </div>
+                <ul class="allList">
+                    <li onclick="selectToDo(this)" oncontextmenu="deleteList(this)">
+                        <span>Hello everyone</span>
+                        <button onclick="deleteToDo(this)">X</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+
+    console.log(window);
+
+    var btn = document.querySelector("#btn");
+    var allList = document.querySelector('.allList');
+    var input = document.querySelector('#input');
+
+    btn.addEventListener(
+        "click",
+        addToDo
+    )
+
+    function addToDo() {
+        if (input.value != "") {
+            allList.innerHTML = allList.innerHTML + `<li onclick="selectToDo(this)" oncontextmenu="deleteList(this)">
+                                                            <span>${input.value}</span>
+                                                            <button onclick="deleteToDo(this)">X</button>
+                                                        </li>`
+            input.value = "";
+        }
+    }
+
+    function selectToDo(list) {
+        list.classList.toggle('doneToDo');
+    }
+
+    function deleteToDo(deleteBtn) {
+        deleteBtn.parentNode.remove();
+    }
+
+    function deleteList(list) {
+        list.remove();
+    }
+
+    input.addEventListener(
+        "keyup",
+        function (event) {
+            console.log(event);
+            if (event.key == "Enter") {
+                addToDo();
+            }
+        }
+    )
+
+</script>
+
+</html>
