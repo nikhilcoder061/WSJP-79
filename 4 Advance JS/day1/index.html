@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">Click me</button>
+</body>
+<script>
+
+    const arr = ['Hello', 'Welcome', 'Jaipur', 'How', 'Are', 'You'];
+
+    const newArr = arr.filter(
+        (value, index) => {
+            return value.includes("e")
+        }
+    )
+
+    console.log(newArr);
+
+
+
+    // const arr = ['Hello', 'Welcome', 'Jaipur', 'How', 'Are', 'You']
+
+    // const newArr = arr.map(
+    //     (value, index) => {
+    //         return value.toLowerCase()
+    //     }
+    // )
+
+    // console.log(newArr);
+    // console.log(arr);
+
+
+    // const arr = [
+    //     {
+    //         name: 'ws',
+    //         contact: 74174855,
+    //         email: 'ws@gmail.com',
+    //         place: 'jaipur'
+    //     },
+    //     {
+    //         name: 'John',
+    //         contact: 98765432,
+    //         email: 'john.doe@gmail.com',
+    //         place: 'delhi'
+    //     },
+    //     {
+    //         name: 'Sarah',
+    //         contact: 91234567,
+    //         email: 'sarah.khan@gmail.com',
+    //         place: 'mumbai'
+    //     },
+    //     {
+    //         name: 'Raj',
+    //         contact: 88997766,
+    //         email: 'raj.verma@gmail.com',
+    //         place: 'bangalore'
+    //     },
+    //     {
+    //         name: 'Aditi',
+    //         contact: 99887766,
+    //         email: 'aditi.sharma@gmail.com',
+    //         place: 'kolkata'
+    //     }
+    // ];
+
+    // const newArr = arr.map(
+    //     (value, index) => {
+    //         return { name: value.name, contact: value.contact }
+    //     }
+    // )
+
+    console.log(newArr);
+
+
+</script>
+
+</html>
