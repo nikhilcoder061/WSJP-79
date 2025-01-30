@@ -44,7 +44,7 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img id="img" src="" class="img-fluid rounded-start">
+                        <img id="img" src="" class="rounded-start" style="width: 100px;">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -74,8 +74,8 @@
     const getWeather = async () => {
 
         cityName.innerHTML = `<div class="spinner-border text-primary" role="status">
-  <span class="visually-hidden">Loading...</span>
-</div>`;
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>`;
 
         const api_key = `21805bff7224936fa25d6cec016a0a4b`;
         const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${input.value}&appid=${api_key}&units=metric`;
