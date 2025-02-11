@@ -1,22 +1,24 @@
-import React from 'react'
-import Header from './Header'
-import Footer from './Footer'
-import UserCard from './UserCard';
+import React, { useState } from 'react'
 
-export default function Layout() {
+export default function Layout({ price }) {
+
+    const [count, setCount] = useState(1);
+
+    const inc = () => {
+        setCount(count + 1)
+    }
+
+    const decs = () => {
+        setCount(count - 1)
+    }
 
     return (
-        <div>
-            <Header />
-            <div className='d-flex gap-2 flex-wrap'>
-                <UserCard name="Wscubetech" email="ws@gmail.com" phone={7418596} city="Jaipur" />
-                <UserCard name="Ankit" email="ankit@gmail.com" phone={74142646} city="Delhi" />
-                <UserCard name="Akash" email="Akash@gmail.com" phone={12345647} city="Kota" />
-                <UserCard name="Himanshu" email="Himanshu@gmail.com" phone={981615} city="Shimla" />
-                <UserCard name="Vijay" email="Vijay@gmail.com" phone={119656597} city="Jodhpur" />
-                <UserCard name="Dharmesh" email="Dharmesh@gmail.com" phone={516849896} city="New delhi" />
-            </div>
-            <Footer />
+        <div className={`d-flex justify-content-center align-items-center mx-auto my-2 w-75 gap-5 ${count >= 5 ? 'bg-info' : 'bg-secondary-subtle'}`}>
+            <h1>{price}</h1>
+            <button disabled={count <= 1 ? true : false} className='btn btn-primary' onClick={decs}>-</button>
+            <h1>{count}</h1>
+            <button className='btn btn-primary' onClick={inc}>+</button>
+            <h1 className={`${count >= 5 ? 'text-success' : ''}`}>{count * price}</h1>
         </div>
     )
 }
