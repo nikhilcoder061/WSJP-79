@@ -1,4 +1,5 @@
 import React from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Input({ inputHandeler }) {
 
@@ -7,6 +8,7 @@ export default function Input({ inputHandeler }) {
         if (event.key == "Enter") {
             inputHandeler(event.target.value);
             event.target.value = '';
+            toast.error("New Todo Added")
         }
     }
 
@@ -21,6 +23,7 @@ export default function Input({ inputHandeler }) {
                     onKeyUp={addToDo}
                 />
             </div>
+            <ToastContainer />
         </>
     )
 }
