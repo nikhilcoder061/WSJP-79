@@ -5,6 +5,7 @@ import Layout from './Layout'
 import Home from './Pages/Home'
 import About from './Pages/About'
 import Shop from './Pages/Shop'
+import ProductDetail from './Pages/ProductDetail'
 
 export default function App() {
 
@@ -25,6 +26,10 @@ export default function App() {
           {
             path: '/shop/:slug?',
             element: <Shop />
+          },
+          {
+            path: '/productdetail/:productId',
+            element: <ProductDetail />
           }
         ]
       }

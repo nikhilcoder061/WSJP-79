@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-export default function Filter() {
+export default function Filter({ slug }) {
 
     const [category, setCategory] = useState([]);
 
@@ -29,16 +29,19 @@ export default function Filter() {
             {/* filter by category start  */}
             <div className='mx-2'>
                 <h1 className='text-2xl my-3'>Filter by Category</h1>
-                <div className='py-2 border px-4 my-2 rounded-lg cursor-pointer bg-blue-500 text-white'>
-                    All Categories
-                </div>
+                <Link to={'/shop'}>
+                    <div className={`py-2 border px-4 my-2 rounded-lg cursor-pointer ${slug == undefined ? 'bg-blue-500 text-white' : ''} `}>
+                        All Categories
+                    </div>
+                </Link>
                 <div>
                     {
                         category.map(
                             (categoryData, categoryIndex) => {
+                                console.log(categoryData.slug);
                                 return (
                                     <Link to={`/shop/${categoryData.slug}`}>
-                                        <div className='py-2 border px-4 my-2 rounded-lg cursor-pointer'>
+                                        <div className={`py-2 border px-4 my-2 rounded-lg cursor-pointer ${categoryData.slug == slug ? 'bg-blue-500 text-white' : ''}  `}>
                                             {categoryData.name}
                                         </div>
                                     </Link>
