@@ -2,12 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-export default function Products({ slug }) {
+export default function Products({ slug, rating, price }) {
 
     const [products, setProducts] = useState([]);
     const [limit, setLimit] = useState(20);
-
-    console.log(slug);
+    const [loading, setLoading] = useState(false);
 
     const getProducts = () => {
 
@@ -20,7 +19,15 @@ export default function Products({ slug }) {
 
         axios.get(productApiUrl).then(
             (succcess) => {
-                setProducts(succcess.data.products);
+
+                const finalData = succcess.data.products.filter(
+                    (productData, productIndex) => {
+                        if (productData.rating >= rating && productData.price >= price.from && productData.price <= price.to) {
+                            return true;
+                        }
+                    }
+                )
+                setProducts(finalData);
             }
         ).catch(
             (error) => {
@@ -31,8 +38,14 @@ export default function Products({ slug }) {
 
     useEffect(
         () => {
+            setLoading(true);
             getProducts();
-        }, [slug, limit]
+
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
+
+        }, [slug, limit, rating, price]
     )
 
     return (
@@ -42,9 +55,24 @@ export default function Products({ slug }) {
                 {
                     products.map(
                         (productData, productIndex) => {
-                            return (
-                                <ProductCard productData={productData} key={productIndex} />
-                            )
+                            return loading == true ?
+                                (
+                                    <div className="max-w-sm w-full p-4 border border-gray-200 rounded-2xl shadow-md bg-white animate-pulse">
+                                        <div className="h-40 bg-gray-300 rounded-lg"></div>
+                                        <div className="mt-4 space-y-3">
+                                            <div className="h-6 bg-gray-300 rounded w-3/4"></div>
+                                            <div className="h-4 bg-gray-300 rounded w-full"></div>
+                                            <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+                                        </div>
+                                        <div className="mt-4 flex justify-between">
+                                            <div className="h-10 bg-gray-300 rounded w-1/3"></div>
+                                            <div className="h-10 bg-gray-300 rounded w-1/4"></div>
+                                        </div>
+                                    </div>
+                                )
+                                : (
+                                    <ProductCard productData={productData} key={productIndex} />
+                                )
                         }
                     )
                 }

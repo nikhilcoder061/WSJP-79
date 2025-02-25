@@ -43,6 +43,7 @@ export default function ProductDetail() {
                                     (imgData, imgIndex) => {
                                         return (
                                             <img
+                                                key={imgIndex}
                                                 src={imgData}
                                                 className="w-20 h-20 object-cover cursor-pointer border rounded-lg"
                                             />
