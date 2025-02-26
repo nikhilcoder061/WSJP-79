@@ -6,6 +6,7 @@ import Home from './Pages/Home'
 import About from './Pages/About'
 import Shop from './Pages/Shop'
 import ProductDetail from './Pages/ProductDetail'
+import MainContext from './Context/MainContext'
 
 export default function App() {
 
@@ -37,7 +38,9 @@ export default function App() {
   )
 
   return (
-    <RouterProvider router={routes} />
+    <MainContext>
+      <RouterProvider router={routes} />
+    </MainContext>
   )
 
 }

@@ -1,12 +1,14 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { Context } from '../Context/MainContext';
 
 export default function Products({ slug, rating, price }) {
 
     const [products, setProducts] = useState([]);
     const [limit, setLimit] = useState(20);
     const [loading, setLoading] = useState(false);
+    const { cart, setCart } = useContext(Context);
 
     const getProducts = () => {
 
@@ -71,7 +73,7 @@ export default function Products({ slug, rating, price }) {
                                     </div>
                                 )
                                 : (
-                                    <ProductCard productData={productData} key={productIndex} />
+                                    <ProductCard productData={productData} key={productIndex} setCart={setCart} cart={cart} />
                                 )
                         }
                     )
@@ -84,7 +86,7 @@ export default function Products({ slug, rating, price }) {
     )
 }
 
-function ProductCard({ productData }) {
+function ProductCard({ productData, cart, setCart }) {
     return (
         <div className="bg-white shadow-lg rounded-lg p-4 border">
             <Link to={`/productdetail/${productData.id}`}>
@@ -94,7 +96,7 @@ function ProductCard({ productData }) {
                 <p className="text-gray-700 font-semibold">${productData.price} <span className='text-gray-500 text-sm font-normal' >({productData.rating}/5)</span></p>
                 <p className="text-sm text-gray-500">Category: {productData.category}</p>
             </Link>
-            <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">Add to Cart</button>
+            <button onClick={() => setCart(cart + 1)} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">Add to Cart</button>
         </div>
     )
 }
