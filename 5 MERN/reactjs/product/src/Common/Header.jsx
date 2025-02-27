@@ -30,11 +30,13 @@ export default function Header() {
                 </ul>
             </nav>
             <div className="flex space-x-4">
-                <button className="relative">
-                    <span className="text-xl">🛒</span>
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">{cart}</span>
-                </button>
-                <button onClick={() => setCart(0)} className="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-700">Clear Cart</button>
+                <Link to={'/cart'}>
+                    <button className="relative">
+                        <span className="text-xl">🛒</span>
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">{cart.length}</span>
+                    </button>
+                </Link>
+                <button onClick={() => setCart([])} className="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-700">Clear Cart</button>
             </div>
         </header>
     )

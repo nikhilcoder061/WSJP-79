@@ -8,7 +8,7 @@ export default function Products({ slug, rating, price }) {
     const [products, setProducts] = useState([]);
     const [limit, setLimit] = useState(20);
     const [loading, setLoading] = useState(false);
-    const { cart, setCart } = useContext(Context);
+    const { cart, setCart, toast } = useContext(Context);
 
     const getProducts = () => {
 
@@ -73,7 +73,7 @@ export default function Products({ slug, rating, price }) {
                                     </div>
                                 )
                                 : (
-                                    <ProductCard productData={productData} key={productIndex} setCart={setCart} cart={cart} />
+                                    <ProductCard productData={productData} key={productIndex} setCart={setCart} cart={cart} toast={toast} />
                                 )
                         }
                     )
@@ -86,7 +86,22 @@ export default function Products({ slug, rating, price }) {
     )
 }
 
-function ProductCard({ productData, cart, setCart }) {
+function ProductCard({ productData, cart, setCart, toast }) {
+
+    const addToCart = () => {
+        // console.log(productData);
+        const { id, title, category, price, thumbnail } = productData;
+
+        const productDetail = { id, title, category, price, thumbnail, qty: 1 };
+
+        const finalData = [...cart, productDetail];
+
+        setCart(finalData)
+        toast.success("Product Added in Cart");
+
+    }
+
+
     return (
         <div className="bg-white shadow-lg rounded-lg p-4 border">
             <Link to={`/productdetail/${productData.id}`}>
@@ -96,7 +111,7 @@ function ProductCard({ productData, cart, setCart }) {
                 <p className="text-gray-700 font-semibold">${productData.price} <span className='text-gray-500 text-sm font-normal' >({productData.rating}/5)</span></p>
                 <p className="text-sm text-gray-500">Category: {productData.category}</p>
             </Link>
-            <button onClick={() => setCart(cart + 1)} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">Add to Cart</button>
+            <button onClick={addToCart} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">Add to Cart</button>
         </div>
     )
 }
