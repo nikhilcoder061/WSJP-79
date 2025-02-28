@@ -1,10 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../Context/MainContext'
 import { Link } from 'react-router-dom';
 
 export default function Cart() {
 
     const { cart, setCart, toast } = useContext(Context);
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    const getTotalPrice = () => {
+        let total = 0;
+        cart.forEach((cartData, cartIndex) => {
+            total = total + (cartData.price * cartData.qty)
+        });
+        setTotalPrice(total);
+    }
+
+    useEffect(
+        () => {
+            getTotalPrice()
+        }, [cart]
+    )
 
     return (
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -31,15 +46,15 @@ export default function Cart() {
                 <h2 className="text-xl font-bold mb-4">Order Summary</h2>
                 <div className="flex justify-between mb-2">
                     <span>Subtotal</span>
-                    <span>$100</span>
+                    <span>${totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                     <span>Tax</span>
-                    <span>$10</span>
+                    <span>${(totalPrice * 10 / 100).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between font-semibold text-lg border-t pt-2">
                     <span>Total</span>
-                    <span>$110</span>
+                    <span>${(totalPrice + (totalPrice * 10 / 100)).toFixed(2)}</span>
                 </div>
                 <button className="w-full bg-blue-500 text-white py-2 mt-4 rounded hover:bg-blue-600">
                     Checkout
@@ -52,6 +67,17 @@ export default function Cart() {
 
 
 function CartRow({ cartData, cartIndex, cart, setCart, toast }) {
+
+
+    const qtyChange = (event, index) => {
+        const newQty = event.target.value;
+        if (newQty > 0) {
+            const oldCart = [...cart]
+            oldCart[index].qty = newQty;
+            setCart(oldCart);
+        }
+    }
+
 
     const deleteCartItem = (indexNum) => {
 
@@ -82,8 +108,9 @@ function CartRow({ cartData, cartIndex, cart, setCart, toast }) {
                     <input
                         type="number"
                         id="qty"
-                        defaultValue={cartData.qty}
+                        value={cartData.qty}
                         className="w-12 px-2 py-1 border rounded text-center"
+                        onChange={(event) => qtyChange(event, cartIndex)}
                     />
                 </div>
             </div>

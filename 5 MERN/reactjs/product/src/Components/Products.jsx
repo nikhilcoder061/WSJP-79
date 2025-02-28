@@ -89,16 +89,23 @@ export default function Products({ slug, rating, price }) {
 function ProductCard({ productData, cart, setCart, toast }) {
 
     const addToCart = () => {
-        // console.log(productData);
-        const { id, title, category, price, thumbnail } = productData;
 
+        const { id, title, category, price, thumbnail } = productData;
         const productDetail = { id, title, category, price, thumbnail, qty: 1 };
 
-        const finalData = [...cart, productDetail];
+        const matchCartData = cart.filter(  // 1 ,2
+            (cartData, cartIndex) => {
+                return cartData.id == productDetail.id
+            }
+        )
 
-        setCart(finalData)
-        toast.success("Product Added in Cart");
-
+        if (matchCartData.length == 0) {
+            const finalData = [...cart, productDetail];
+            setCart(finalData)
+            toast.success("Product Added in Cart");
+        } else {
+            toast.error("Product already in Cart");
+        }
     }
 
 
