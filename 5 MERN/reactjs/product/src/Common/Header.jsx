@@ -1,11 +1,24 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Context } from '../Context/MainContext'
 
 export default function Header() {
 
-    const { cart, setCart } = useContext(Context);
+    const { cart, setCart, user, setUser } = useContext(Context);
+    const navigate = useNavigate();
+    const location = useLocation();
 
+    const logout = () => {
+        setUser('');
+    }
+
+    useEffect(
+        () => {
+            if (user == "" && location.pathname != '/register') {
+                navigate('/login');
+            }
+        }, [user, location.pathname]
+    )
 
     return (
         <header className="bg-gray-900 text-white p-4 flex justify-between items-center shadow-lg sticky top-0">
@@ -37,6 +50,15 @@ export default function Header() {
                     </button>
                 </Link>
                 <button onClick={() => setCart([])} className="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-700">Clear Cart</button>
+                {
+                    !user
+                        ?
+                        <Link to={'/login'}>
+                            <button className="bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-700">Login</button>
+                        </Link>
+                        :
+                        <button onClick={logout} className="bg-gray-500 px-4 py-2 rounded text-white hover:bg-gray-700">Logout</button>
+                }
             </div>
         </header>
     )

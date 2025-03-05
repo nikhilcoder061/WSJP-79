@@ -8,6 +8,8 @@ import Shop from './Pages/Shop'
 import ProductDetail from './Pages/ProductDetail'
 import MainContext from './Context/MainContext'
 import Cart from './Pages/Cart'
+import Login from './Pages/Login'
+import Register from './Pages/Register'
 
 export default function App() {
 
@@ -36,6 +38,14 @@ export default function App() {
           {
             path: '/cart',
             element: <Cart />
+          },
+          {
+            path: '/login',
+            element: <Login />
+          },
+          {
+            path: '/register',
+            element: <Register />
           }
         ]
       }
