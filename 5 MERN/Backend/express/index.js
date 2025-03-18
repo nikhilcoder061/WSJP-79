@@ -152,11 +152,18 @@ server.post(
 
 // read users start
 server.get(
-    "/user",
+    "/user/:id?",
     async (req, res) => {
         try {
 
-            const users = await userModel.find();
+            const id = req.params.id;
+            let users;
+            if (id) {
+                users = await userModel.findById(id);
+            } else {
+                users = await userModel.find();
+            }
+
             if (users) {
                 res.send(
                     {
@@ -175,12 +182,152 @@ server.get(
             }
 
         } catch (error) {
-
+            console.log(error);
+            res.send(
+                {
+                    msg: "Internal Server error",
+                    status: 0
+                }
+            )
         }
     }
 )
 // read users end
 
+//delete users start
+server.delete(
+    "/user/delete/:id",
+    (req, res) => {
+        try {
+            const id = req.params.id;
+            userModel.deleteOne({ _id: id }).then(
+                (success) => {
+                    res.send(
+                        {
+                            msg: "User Deleted Successfully",
+                            status: 1
+                        }
+                    )
+                }
+            ).catch(
+                (error) => {
+                    res.send(
+                        {
+                            msg: "User not Deleted",
+                            status: 0
+                        }
+                    )
+                }
+            )
+        } catch (error) {
+            console.log(error);
+            res.send(
+                {
+                    msg: "Internal Server error",
+                    status: 0
+                }
+            )
+        }
+    }
+)
+//delete users end
+
+// status change start 
+server.patch(
+    "/user/status/:id",
+    async (req, res) => {
+        try {
+            const id = req.params.id;
+            const user = await userModel.findById(id);
+            userModel.updateOne(
+                {
+                    _id: id
+                },
+                {
+                    status: !user.status
+                }
+            ).then(
+                (success) => {
+                    res.send(
+                        {
+                            msg: "Status update Successfully",
+                            status: 1
+                        }
+                    )
+                }
+            ).catch(
+                (error) => {
+                    console.log(error);
+                    res.send(
+                        {
+                            msg: "Status not updated",
+                            status: 0
+                        }
+                    )
+                }
+            )
+        } catch (error) {
+            console.log(error);
+            res.send(
+                {
+                    msg: "Internal Server error",
+                    status: 0
+                }
+            )
+        }
+    }
+)
+// status change end
+
+// update user start
+server.put(
+    "/user/update/:id",
+    async (req, res) => {
+        try {
+
+            const id = req.params.id;
+            const user = await userModel.findById(id);
+
+            console.log(req.body);
+
+            userModel.updateOne(
+                { _id: id },
+                {
+                    ...req.body
+                }
+            ).then(
+                (success) => {
+                    res.send(
+                        {
+                            msg: "User updated Successfully",
+                            status: 1
+                        }
+                    )
+                }
+            ).catch(
+                (error) => {
+                    console.log(error);
+                    res.send(
+                        {
+                            msg: "User not updated",
+                            status: 0
+                        }
+                    )
+                }
+            )
+
+        } catch (error) {
+            console.log(error);
+            res.send(
+                {
+                    msg: "Internal Server error",
+                    status: 0
+                }
+            )
+        }
+    }
+)
+// update user end
 
 
 
@@ -195,7 +342,7 @@ mongoose.connect(
     () => {
         // server run at port 5000 start 
         server.listen(
-            5000,
+            5001,
             () => {
                 console.log("Server start at port 5000");
             }
