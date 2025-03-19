@@ -1,9 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // create a server start  
 const server = express();
 server.use(express.json()); // middleware
+server.use(cors(
+    {
+        origin: ["http://localhost:5173"]
+    }
+))
 
 // create a server end
 
