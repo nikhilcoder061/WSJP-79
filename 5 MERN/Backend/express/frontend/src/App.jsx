@@ -7,11 +7,13 @@ import { ToastContainer, toast } from 'react-toastify';
 export default function App() {
 
   const [allUser, setAllUser] = useState([]);
+  const [userDetails, setUserDetails] = useState(null);
 
   const toastMsg = (msg, status) => {
     toast(msg, { type: status == true ? 'success' : 'error' });
   }
 
+  console.log(userDetails);
 
   // get all user start 
   const getUserData = () => {
@@ -43,12 +45,21 @@ export default function App() {
       password: event.target.password.value
     }
 
-    axios.post("http://localhost:5001/user/register", newUserData).then(
+    let response;
+
+    if (userDetails == null) {
+      response = axios.post("http://localhost:5001/user/register", newUserData);
+    } else {
+      response = axios.put(`http://localhost:5001/user/update/${userDetails._id}`, newUserData)
+    }
+
+    response.then(
       (success) => {
         toastMsg(success.data.msg, success.data.status);
         if (success.data.status == 1) {
           getUserData();
           event.target.reset();
+          setUserDetails(null);
         }
       }
     ).catch(
@@ -130,6 +141,7 @@ export default function App() {
                 name="name"
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required=""
+                defaultValue={userDetails?.name}
               />
             </div>
             <div className="flex flex-col">
@@ -142,6 +154,7 @@ export default function App() {
                 name="email"
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required=""
+                defaultValue={userDetails?.email}
               />
             </div>
             <div className="flex flex-col">
@@ -154,6 +167,7 @@ export default function App() {
                 name="phone"
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required=""
+                defaultValue={userDetails?.phone}
               />
             </div>
             <div className="flex flex-col">
@@ -166,6 +180,7 @@ export default function App() {
                 name="age"
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required=""
+                defaultValue={userDetails?.age}
               />
             </div>
             <div className="flex flex-col">
@@ -178,6 +193,7 @@ export default function App() {
                 name="password"
                 className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required=""
+                defaultValue={userDetails?.password}
               />
             </div>
             <div className="flex justify-center mt-6">
@@ -185,7 +201,9 @@ export default function App() {
                 type="submit"
                 className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 focus:outline-none"
               >
-                Submit
+                {
+                  userDetails == null ? "Add User" : "Update User"
+                }
               </button>
             </div>
           </div>
@@ -211,9 +229,8 @@ export default function App() {
             {
               allUser.map(
                 (userData, userIndex) => {
-                  console.log(userData);
                   return (
-                    <tr className="border-b">
+                    <tr className="border-b" key={userIndex}>
                       <td className="px-6 py-2">{userData.name}</td>
                       <td className="px-6 py-2">{userData.email}</td>
                       <td className="px-6 py-2">{userData.phone}</td>
@@ -232,7 +249,7 @@ export default function App() {
                         }
                       </td>
                       <td className="px-6 py-2 text-center">
-                        <button className="px-4 py-2 bg-yellow-500 text-white rounded-lg">
+                        <button onClick={() => setUserDetails(userData)} className="px-4 py-2 bg-yellow-500 text-white rounded-lg">
                           Edit
                         </button>
                         <button onClick={() => deleteUser(userData._id)} className="px-4 py-2 bg-red-500 text-white rounded-lg ml-2">
