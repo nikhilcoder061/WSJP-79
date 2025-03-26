@@ -1,6 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const server = express();
+const cors = require('cors');
+const CategoryRouter = require('./routers/CategoryRouter');
+
+// middleware
+server.use(express.json());
+server.use(cors(
+    {
+        origin:['http://localhost:5173']
+    }
+));
+
+server.use('/category', CategoryRouter)
 
 
 
