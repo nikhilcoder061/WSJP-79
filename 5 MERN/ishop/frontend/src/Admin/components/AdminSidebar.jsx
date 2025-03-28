@@ -40,9 +40,9 @@ export default function AdminSidebar() {
 
         {
           navMenu.map(
-            (navItem) => {
+            (navItem, navIndex) => {
               return (
-                <Link to={navItem.path} className=" p-3 rounded-lg hover:bg-gray-700 flex gap-4 items-center">
+                <Link key={navIndex} to={navItem.path} className=" p-3 rounded-lg hover:bg-gray-700 flex gap-4 items-center">
                   {navItem.icon}
                   {navItem.name}
                 </Link>

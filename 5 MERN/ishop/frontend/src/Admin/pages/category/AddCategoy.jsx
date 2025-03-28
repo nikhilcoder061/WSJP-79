@@ -1,24 +1,36 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import axios from 'axios';
+import { MainContext } from '../../../Context/Context';
 
 export default function AddCategoy() {
-
+  const { toastNotify, CATEGORY_URL, API_BASE_URL } = useContext(MainContext);
   const categoryName = useRef();
   const categorySlug = useRef();
 
+
+  const createSlug = () => {
+    categorySlug.current.value = categoryName.current.value.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+  }
+
+
   const addCategory = (event) => {
     event.preventDefault();
-    const categoryData = {
-      categoryName: categoryName.current.value,
-      categorySlug: categorySlug.current.value
-    }
 
-    axios.post("http://localhost:5000/category/create", categoryData).then(
+
+    const formData = new FormData();
+    formData.append("categoryName", categoryName.current.value);
+    formData.append("categorySlug", categorySlug.current.value);
+    formData.append("categoryImageName", event.target.categoryImageName.files[0])
+
+    axios.post(API_BASE_URL + CATEGORY_URL + "/create", formData).then(
       (success) => {
+
+        toastNotify(success.data.msg, success.data.status);
+
         if (success.data.status == 1) {
           event.target.reset();
         }
-        console.log(success);
+
       }
     ).catch(
       (error) => {
@@ -35,6 +47,7 @@ export default function AddCategoy() {
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Category Name</label>
           <input
+            onChange={createSlug}
             ref={categoryName}
             name="categoryName"
             type="text"
@@ -46,11 +59,12 @@ export default function AddCategoy() {
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Slug</label>
           <input
+            readOnly
             ref={categorySlug}
             name="categorySlug"
             type="text"
             placeholder="Enter slug"
-            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border bg-gray-200 border-gray-300 rounded focus:outline-none "
           />
         </div>
         {/* Image */}

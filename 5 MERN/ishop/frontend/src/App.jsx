@@ -10,6 +10,7 @@ import ViewColor from './Admin/pages/color/ViewColor'
 import AddColor from './Admin/pages/color/AddColor'
 import ViewProducts from './Admin/pages/products/ViewProducts'
 import AddProducts from './Admin/pages/products/AddProducts'
+import Context from './Context/Context'
 
 export default function App() {
 
@@ -63,6 +64,8 @@ export default function App() {
   )
 
   return (
-    <RouterProvider router={routes} />
+    <Context>
+      <RouterProvider router={routes} />
+    </Context>
   )
 }
