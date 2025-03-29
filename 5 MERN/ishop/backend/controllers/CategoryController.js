@@ -1,5 +1,6 @@
 const generateUniqueImageName = require("../helping");
-const CategoryModel = require("../models/CategoryModel")
+const CategoryModel = require("../models/CategoryModel");
+const CategoryRouter = require("../routers/CategoryRouter");
 
 class CategoryController {
 
@@ -126,6 +127,53 @@ class CategoryController {
                             )
                         }
                     )
+                } catch (error) {
+                    console.log(error);
+                    reject(
+                        {
+                            msg: "Internal Server error",
+                            status: 0
+                        }
+                    )
+                }
+            }
+        )
+    }
+
+    edit(data, id, file) {
+        return new Promise(
+            (resolve, reject) => {
+                try {
+                    if (file) {
+
+                    } else {
+                        CategoryModel.updateOne(
+                            { _id: id },
+                            {
+                                $set: {
+                                    
+                                }
+                            }
+                        ).then(
+                            (success) => {
+                                resolve(
+                                    {
+                                        msg: "Category updated",
+                                        status: 1
+                                    }
+                                )
+                            }
+                        ).catch(
+                            (error) => {
+                                reject(
+                                    {
+                                        msg: "Category not updated",
+                                        status: 0
+                                    }
+                                )
+                            }
+                        )
+                    }
                 } catch (error) {
                     console.log(error);
                     reject(

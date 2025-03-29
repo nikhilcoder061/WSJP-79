@@ -8,9 +8,10 @@ const CategoryRouter = require('./routers/CategoryRouter');
 server.use(express.json());
 server.use(cors(
     {
-        origin:['http://localhost:5174']
+        origin:['http://localhost:5173']
     }
 ));
+server.use(express.static("Public"));
 
 server.use('/category', CategoryRouter)
 

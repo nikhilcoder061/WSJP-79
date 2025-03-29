@@ -24,7 +24,7 @@ export default function ViewCategory() {
 
   useEffect(
     () => {
-      fetchAllCategory()
+      fetchAllCategory();
     }, []
   )
 
@@ -55,6 +55,8 @@ export default function ViewCategory() {
         </thead>
         <tbody>
           {
+            Array.isArray(allCategory)
+            &&
             allCategory.map(
               (categoryData, categoryIndex) => {
                 return (
@@ -64,7 +66,7 @@ export default function ViewCategory() {
                     <td className="p-1 border">{categoryData.categorySlug}</td>
                     <td className="p-1 border">
                       <img
-                        src={categoryData.categoryImageName}
+                        src={API_BASE_URL + `/images/category/${categoryData.categoryImageName}`}
                         alt="category"
                         className="w-12 h-12 object-cover rounded"
                       />
@@ -75,9 +77,11 @@ export default function ViewCategory() {
                       </button>
                     </td>
                     <td className="p-1 border space-x-2">
-                      <button className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
-                        Edit
-                      </button>
+                      <Link to={`/admin/category/edit/${categoryData._id}`}>
+                        <button className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
+                          Edit
+                        </button>
+                      </Link>
                       <button onClick={() => deleteCategory(categoryData._id)} className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
                         Delete
                       </button>

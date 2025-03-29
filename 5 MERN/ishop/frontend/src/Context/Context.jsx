@@ -11,8 +11,15 @@ export default function Context({ children }) {
     const toastNotify = (msg, status) => toast(msg, { type: status == true ? 'success' : 'error' });
 
     // fetch all category start
-    const fetchAllCategory = () => {
-        axios.get(API_BASE_URL + CATEGORY_URL).then(
+    const fetchAllCategory = (category_id = null) => {
+
+        let categoryApiURL = API_BASE_URL + CATEGORY_URL
+
+        if (category_id) {
+            categoryApiURL += `/${category_id}`
+        }
+        
+        axios.get(categoryApiURL).then(
             (success) => {
                 setAllCategory(success.data.category);
             }
@@ -27,7 +34,7 @@ export default function Context({ children }) {
     return (
         <MainContext.Provider value={{ toastNotify, fetchAllCategory, allCategory, API_BASE_URL, CATEGORY_URL }}>
             {children}
-            <ToastContainer autoClose={500}/>
+            <ToastContainer autoClose={500} />
         </MainContext.Provider>
     )
 }

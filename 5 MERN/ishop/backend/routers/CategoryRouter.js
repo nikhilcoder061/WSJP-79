@@ -47,6 +47,7 @@ CategoryRouter.get(
 // delete start
 CategoryRouter.delete(
     '/delete/:id',
+
     (req, res) => {
         const result = new CategoryController().delete(req.params.id);
         result.then(
@@ -62,5 +63,29 @@ CategoryRouter.delete(
     }
 )
 // delete end
+
+// edit category start 
+CategoryRouter.put(
+    "/edit/:id",
+    fileUpload(
+        {
+            createParentPath: true
+        }
+    ),
+    (req, res) => {
+        const result = new CategoryController().edit(req.body, req.params.id, req.files?.categoryImageName);
+        result.then(
+            (success) => {
+                res.send(success);
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+                res.send(error);
+            }
+        )
+    }
+)
+// edit category end
 
 module.exports = CategoryRouter;

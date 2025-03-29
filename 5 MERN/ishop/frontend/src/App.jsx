@@ -11,6 +11,7 @@ import AddColor from './Admin/pages/color/AddColor'
 import ViewProducts from './Admin/pages/products/ViewProducts'
 import AddProducts from './Admin/pages/products/AddProducts'
 import Context from './Context/Context'
+import EditCategoy from './Admin/pages/category/EditCategory'
 
 export default function App() {
 
@@ -41,6 +42,10 @@ export default function App() {
           {
             path: 'category/add',
             element: <AddCategoy />
+          },
+          {
+            path: 'category/edit/:category_id',
+            element: <EditCategoy />
           },
           {
             path: 'color',
