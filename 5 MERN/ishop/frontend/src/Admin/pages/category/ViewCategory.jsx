@@ -2,13 +2,44 @@ import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { MainContext } from '../../../Context/Context'
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 export default function ViewCategory() {
 
   const { fetchAllCategory, allCategory, API_BASE_URL, CATEGORY_URL, toastNotify } = useContext(MainContext);
 
   const deleteCategory = (id) => {
-    axios.delete(API_BASE_URL + CATEGORY_URL + "/delete/" + id).then(
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(API_BASE_URL + CATEGORY_URL + "/delete/" + id).then(
+          (success) => {
+            toastNotify(success.data.msg, success.data.status);
+            if (success.data.status == 1) {
+              fetchAllCategory();
+            }
+          }
+        ).catch(
+          (error) => {
+            console.log(error);
+          }
+        )
+      }
+    });
+
+  }
+
+
+  const statusChange = (id) => {
+    axios.patch(API_BASE_URL + CATEGORY_URL + `/status/${id}`).then(
       (success) => {
         toastNotify(success.data.msg, success.data.status);
         if (success.data.status == 1) {
@@ -21,6 +52,7 @@ export default function ViewCategory() {
       }
     )
   }
+
 
   useEffect(
     () => {
@@ -72,9 +104,18 @@ export default function ViewCategory() {
                       />
                     </td>
                     <td className="p-1 border">
-                      <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                        Active
-                      </button>
+                      {
+                        categoryData.categoryStatus == true
+                          ?
+                          <button onClick={() => statusChange(categoryData._id)} className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                            Active
+                          </button>
+                          :
+                          <button onClick={() => statusChange(categoryData._id)} className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700">
+                            In Active
+                          </button>
+                      }
+
                     </td>
                     <td className="p-1 border space-x-2">
                       <Link to={`/admin/category/edit/${categoryData._id}`}>

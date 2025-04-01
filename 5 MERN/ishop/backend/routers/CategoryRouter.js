@@ -88,4 +88,21 @@ CategoryRouter.put(
 )
 // edit category end
 
+CategoryRouter.patch(
+    "/status/:id",
+    (req, res) => {
+        const result = new CategoryController().statusChange(req.params.id);
+        result.then(
+            (success) => {
+                res.send(success);
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+                res.send(error);
+            }
+        )
+    }
+)
+
 module.exports = CategoryRouter;

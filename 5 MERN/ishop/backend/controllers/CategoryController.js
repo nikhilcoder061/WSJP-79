@@ -145,13 +145,58 @@ class CategoryController {
             (resolve, reject) => {
                 try {
                     if (file) {
+                        const newCategoryImageName = generateUniqueImageName(file.name);
+                        const destination = "./Public/images/category/" + newCategoryImageName;
+                        file.mv(
+                            destination,
+                            (error) => {
+                                if (error) {
+                                    reject(
+                                        {
+                                            msg: "Category not updated due to image",
+                                            status: 0
+                                        }
+                                    )
+                                } else {
+                                    CategoryModel.updateOne(
+                                        { _id: id },
+                                        {
+                                            $set: {
+                                                categoryName: data.categoryName,
+                                                categorySlug: data.categorySlug,
+                                                categoryImageName: newCategoryImageName
+                                            }
+                                        }
+                                    ).then(
+                                        (success) => {
+                                            resolve(
+                                                {
+                                                    msg: "Category updated",
+                                                    status: 1
+                                                }
+                                            )
+                                        }
+                                    ).catch(
+                                        (error) => {
+                                            reject(
+                                                {
+                                                    msg: "Category not updated",
+                                                    status: 0
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
+                            }
+                        )
 
                     } else {
                         CategoryModel.updateOne(
                             { _id: id },
                             {
                                 $set: {
-                                    
+                                    categoryName: data.categoryName,
+                                    categorySlug: data.categorySlug
                                 }
                             }
                         ).then(
@@ -186,6 +231,63 @@ class CategoryController {
             }
         )
     }
+
+    statusChange(id) {
+        return new Promise(
+            async (resolve, reject) => {
+                try {
+                    const category = await CategoryModel.findById(id);
+                    CategoryModel.updateOne(
+                        { _id: id },
+                        {
+                            $set: {
+                                categoryStatus: !category.categoryStatus
+                            }
+                        }
+                    ).then(
+                        (success) => {
+                            if (category.categoryStatus == false) {
+                                resolve(
+                                    {
+                                        msg: "Status Activate",
+                                        status: 1
+                                    }
+                                )
+                            } else {
+                                resolve(
+                                    {
+                                        msg: "Status Deactivate",
+                                        status: 1
+                                    }
+                                )
+                            }
+
+                        }
+                    ).catch(
+                        (error) => {
+                            console.log(error);
+                            reject(
+                                {
+                                    msg: "Status Not Updated",
+                                    status: 0
+                                }
+                            )
+                        }
+                    )
+
+                } catch (error) {
+                    console.log(error);
+                    reject(
+                        {
+                            msg: "Internal Server error",
+                            status: 0
+                        }
+                    )
+                }
+            }
+        )
+    }
+
 }
 
 module.exports = CategoryController

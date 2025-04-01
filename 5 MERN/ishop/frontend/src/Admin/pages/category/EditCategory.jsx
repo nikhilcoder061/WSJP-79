@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import axios from 'axios';
 import { MainContext } from '../../../Context/Context';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function EditCategoy() {
     const { toastNotify, CATEGORY_URL, API_BASE_URL, fetchAllCategory, allCategory } = useContext(MainContext);
     const categoryName = useRef();
     const categorySlug = useRef();
     const { category_id } = useParams();
+    const navigate = useNavigate();
 
 
     useEffect(
@@ -34,6 +35,7 @@ export default function EditCategoy() {
                 toastNotify(success.data.msg, success.data.status);
                 if (success.data.status == 1) {
                     event.target.reset();
+                    navigate('/admin/category');
                 }
             }
         ).catch(

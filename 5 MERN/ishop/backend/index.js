@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const server = express();
 const cors = require('cors');
 const CategoryRouter = require('./routers/CategoryRouter');
+const ColorRouter = require('./routers/ColorRouter');
 
 // middleware
 server.use(express.json());
@@ -13,7 +14,8 @@ server.use(cors(
 ));
 server.use(express.static("Public"));
 
-server.use('/category', CategoryRouter)
+server.use('/category', CategoryRouter);
+server.use('/color', ColorRouter);
 
 
 
