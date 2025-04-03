@@ -6,8 +6,10 @@ export const MainContext = createContext();
 
 export default function Context({ children }) {
     const [allCategory, setAllCategory] = useState([]);
+    const [allColor, setAllColor] = useState([]);
     const API_BASE_URL = "http://localhost:5000";
     const CATEGORY_URL = "/category"
+    const COLOR_URL = "/color"
     const toastNotify = (msg, status) => toast(msg, { type: status == true ? 'success' : 'error' });
 
     // fetch all category start
@@ -18,7 +20,7 @@ export default function Context({ children }) {
         if (category_id) {
             categoryApiURL += `/${category_id}`
         }
-        
+
         axios.get(categoryApiURL).then(
             (success) => {
                 setAllCategory(success.data.category);
@@ -31,8 +33,29 @@ export default function Context({ children }) {
     }
     // fetch all category end
 
+    // fetch all color start
+    const fetchAllColor = (color_id = null) => {
+
+        let colorApiURL = API_BASE_URL + COLOR_URL
+
+        if (color_id) {
+            colorApiURL += `/${color_id}`
+        }
+
+        axios.get(colorApiURL).then(
+            (success) => {
+                setAllColor(success.data.color);
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+    // fetch all color end
+
     return (
-        <MainContext.Provider value={{ toastNotify, fetchAllCategory, allCategory, API_BASE_URL, CATEGORY_URL }}>
+        <MainContext.Provider value={{ toastNotify, fetchAllCategory, fetchAllColor, allColor, allCategory, API_BASE_URL, CATEGORY_URL, COLOR_URL }}>
             {children}
             <ToastContainer autoClose={500} />
         </MainContext.Provider>

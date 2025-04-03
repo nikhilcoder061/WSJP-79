@@ -4,18 +4,20 @@ const server = express();
 const cors = require('cors');
 const CategoryRouter = require('./routers/CategoryRouter');
 const ColorRouter = require('./routers/ColorRouter');
+const ProductRouter = require('./routers/ProductRouter');
 
 // middleware
 server.use(express.json());
 server.use(cors(
     {
-        origin:['http://localhost:5173']
+        origin: ['http://localhost:5173']
     }
 ));
 server.use(express.static("Public"));
 
 server.use('/category', CategoryRouter);
 server.use('/color', ColorRouter);
+server.use('/product', ProductRouter);
 
 
 
