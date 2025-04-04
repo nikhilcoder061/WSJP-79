@@ -1,9 +1,12 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { MainContext } from '../../../Context/Context';
+import Select from 'react-select'
+import axios from 'axios';
 
 export default function AddProducts() {
 
-  const { fetchAllCategory, fetchAllColor, allColor, allCategory } = useContext(MainContext);
+  const { fetchAllCategory, fetchAllColor, allColor, allCategory, API_BASE_URL, PRODUCT_URL, toastNotify } = useContext(MainContext);
+  const [selectedColor, setSelectecdColor] = useState([]);
 
   const productName = useRef();
   const productSlug = useRef();
@@ -19,6 +22,36 @@ export default function AddProducts() {
     final_price.current.value = original_price.current.value - (original_price.current.value * discount_percentage.current.value / 100)
   }
 
+
+  const addProduct = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", productName.current.value);
+    formData.append("slug", productSlug.current.value);
+    formData.append("original_price", original_price.current.value);
+    formData.append("discount_percentage", discount_percentage.current.value);
+    formData.append("final_price", final_price.current.value);
+    formData.append("short_description", event.target.short_description.value);
+    formData.append("long_description", event.target.long_description.value);
+    formData.append("main_image", event.target.main_image.files[0])
+    formData.append("category_id", event.target.category_id.value);
+    formData.append("color", JSON.stringify(selectedColor))
+
+    axios.post(API_BASE_URL + PRODUCT_URL + "/create", formData).then(
+      (success) => {
+        toastNotify(success.data.msg, success.data.status);
+        if (success.data.status == 1) {
+          event.target.reset();
+        }
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
   useEffect(
     () => {
       fetchAllCategory();
@@ -30,7 +63,7 @@ export default function AddProducts() {
   return (
     <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg mt-2 border">
       <h2 className="text-2xl font-semibold mb-4">Add Product</h2>
-      <form className="grid grid-cols-3 gap-6">
+      <form className="grid grid-cols-3 gap-6" onSubmit={addProduct}>
         <div>
           <label className="block font-medium">Product Name</label>
           <input
@@ -106,34 +139,39 @@ export default function AddProducts() {
         </div>
         <div>
           <label className="block font-medium">Category</label>
-          <select name="category" className="w-full p-2 border rounded">
-            <option value="">Select Category</option>
-            {
-              allCategory.map(
-                (category, index) => {
-                  return (
-                    <option key={index} value={category._id}>{category.categoryName}</option>
-                  )
-                }
-              )
-            }
-          </select>
+          <Select name='category_id' options={
+            allCategory.map(
+              (category, index) => {
+                return (
+                  { value: category._id, label: category.categoryName }
+                )
+              }
+            )
+          } />
         </div>
         <div>
           <label className="block font-medium">Color</label>
-          <select name="color" className="w-full p-2 border rounded">
-            <option value="">Select Color</option>
-            {
+          <Select
+            onChange={
+              (options) => {
+                const allColorId = options.map(
+                  (data, index) => {
+                    return data.value;
+                  }
+                )
+                setSelectecdColor(allColorId)
+              }
+            }
+
+            closeMenuOnSelect={false} isMulti options={
               allColor.map(
                 (color, index) => {
                   return (
-                    <option key={index} value={color._id}>{color.colorName}</option>
+                    { value: color._id, label: color.colorName }
                   )
                 }
               )
-            }
-
-          </select>
+            } />
         </div>
         <div>
           <label className="block font-medium">Main Image</label>

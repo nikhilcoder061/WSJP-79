@@ -31,6 +31,7 @@ ProductRouter.post(
         }
     ),
     (req, res) => {
+
         const result = new ProductController().create(req.body, req.files?.main_image);
         result.then(
             (success) => {

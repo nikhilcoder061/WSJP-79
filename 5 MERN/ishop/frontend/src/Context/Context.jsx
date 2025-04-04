@@ -8,8 +8,9 @@ export default function Context({ children }) {
     const [allCategory, setAllCategory] = useState([]);
     const [allColor, setAllColor] = useState([]);
     const API_BASE_URL = "http://localhost:5000";
-    const CATEGORY_URL = "/category"
-    const COLOR_URL = "/color"
+    const CATEGORY_URL = "/category";
+    const COLOR_URL = "/color";
+    const PRODUCT_URL = "/product";
     const toastNotify = (msg, status) => toast(msg, { type: status == true ? 'success' : 'error' });
 
     // fetch all category start
@@ -55,7 +56,10 @@ export default function Context({ children }) {
     // fetch all color end
 
     return (
-        <MainContext.Provider value={{ toastNotify, fetchAllCategory, fetchAllColor, allColor, allCategory, API_BASE_URL, CATEGORY_URL, COLOR_URL }}>
+        <MainContext.Provider value={{
+            toastNotify, fetchAllCategory, fetchAllColor, allColor, allCategory,
+            API_BASE_URL, CATEGORY_URL, COLOR_URL, PRODUCT_URL
+        }}>
             {children}
             <ToastContainer autoClose={500} />
         </MainContext.Provider>

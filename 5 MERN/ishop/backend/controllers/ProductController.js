@@ -40,6 +40,8 @@ class ProductController {
         return new Promise(
             (resolve, reject) => {
                 try {
+                    // console.log(JSON.parse(data.color));
+                    // return;
                     const newProductImageName = generateUniqueImageName(file.name);
                     const destination = "./Public/images/product/" + newProductImageName;
                     file.mv(
@@ -57,6 +59,7 @@ class ProductController {
                                     const product = new ProductModel(
                                         {
                                             ...data,
+                                            color: JSON.parse(data.color),
                                             main_image: newProductImageName
                                         }
                                     );
