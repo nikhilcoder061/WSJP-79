@@ -47,4 +47,23 @@ ProductRouter.post(
 )
 // create Product end
 
+// updateProduct start
+ProductRouter.patch(
+    "/update/:id",
+    (req, res) => {
+        const result = new ProductController().update(req.params.id, req.body.flag);
+        result.then(
+            (success) => {
+                res.send(success);
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+                res.send(error);
+            }
+        )
+    }
+)
+// updateProduct end
+
 module.exports = ProductRouter;

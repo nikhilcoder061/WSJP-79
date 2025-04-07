@@ -11,9 +11,9 @@ class ProductController {
                     let product;
 
                     if (id) {
-                        product = await ProductModel.findById(id);
+                        product = await ProductModel.findById(id).populate(["category_id", "color"]);
                     } else {
-                        product = await ProductModel.find();
+                        product = await ProductModel.find().populate(["category_id", "color"]);
                     }
                     resolve(
                         {
@@ -107,6 +107,64 @@ class ProductController {
         )
     }
 
+    update(id, flag) {
+        return new Promise(
+            async (resolve, reject) => {
+
+                try {
+                    const product = await ProductModel.findById(id);
+                    ProductModel.updateOne(
+                        { _id: id },
+                        {
+                            $set: {
+                                status: flag == 2 ? !product.status : product.status,
+                                stock: flag == 1 ? !product.stock : product.stock,
+                                top_selling: flag == 3 ? !product.top_selling : product.top_selling
+                            }
+                        }
+                    ).then(
+                        (success) => {
+                            if (product.status == false) {
+                                resolve(
+                                    {
+                                        msg: "Product updated",
+                                        status: 1
+                                    }
+                                )
+                            } else {
+                                resolve(
+                                    {
+                                        msg: "Product updated",
+                                        status: 1
+                                    }
+                                )
+                            }
+
+                        }
+                    ).catch(
+                        (error) => {
+                            console.log(error);
+                            reject(
+                                {
+                                    msg: "Status Not Updated",
+                                    status: 0
+                                }
+                            )
+                        }
+                    )
+
+                } catch (error) {
+                    console.log(error);
+                    reject(
+                        {
+                            msg: "Internal Server error",
+                            status: 0
+                        }
+                    )
+                }
+            }
+        )
+    }
 
 }
 

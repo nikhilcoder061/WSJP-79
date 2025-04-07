@@ -7,6 +7,8 @@ export const MainContext = createContext();
 export default function Context({ children }) {
     const [allCategory, setAllCategory] = useState([]);
     const [allColor, setAllColor] = useState([]);
+    const [allProduct, setAllProduct] = useState([]);
+
     const API_BASE_URL = "http://localhost:5000";
     const CATEGORY_URL = "/category";
     const COLOR_URL = "/color";
@@ -55,9 +57,30 @@ export default function Context({ children }) {
     }
     // fetch all color end
 
+    // fetch products start
+    const fetchAllProduct = (product_id = null) => {
+
+        let productApiURL = API_BASE_URL + PRODUCT_URL
+
+        if (product_id) {
+            productApiURL += `/${product_id}`
+        }
+
+        axios.get(productApiURL).then(
+            (success) => {
+                setAllProduct(success.data.product);
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+    // fetch products end
+
     return (
         <MainContext.Provider value={{
-            toastNotify, fetchAllCategory, fetchAllColor, allColor, allCategory,
+            toastNotify, fetchAllCategory, fetchAllColor, fetchAllProduct, allColor, allCategory, allProduct,
             API_BASE_URL, CATEGORY_URL, COLOR_URL, PRODUCT_URL
         }}>
             {children}
