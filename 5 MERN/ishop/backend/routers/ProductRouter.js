@@ -66,4 +66,32 @@ ProductRouter.patch(
 )
 // updateProduct end
 
+//  multiple image start 
+
+ProductRouter.post(
+    '/multipleimage/:id',
+    fileUpload(
+        {
+            createParentPath: true
+        }
+    ),
+    (req, res) => {
+
+        const result = new ProductController().multipleImage(req.params.id, req.files?.other_image);
+        result.then(
+            (success) => {
+                res.send(success);
+            }
+        ).catch(
+            (error) => {
+                res.send(error);
+                console.log(error);
+            }
+        )
+    }
+)
+
+
+//  multiple image end
+
 module.exports = ProductRouter;

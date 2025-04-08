@@ -4,6 +4,7 @@ import { MainContext } from '../../../Context/Context';
 import { ImCross } from "react-icons/im";
 import axios from 'axios';
 import { FaRegStar } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 export default function ViewProducts() {
 
@@ -114,9 +115,11 @@ export default function ViewProducts() {
                                             <button className="p-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600">
                                                 <FaEye />
                                             </button>
-                                            <button className="p-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600">
-                                                <FaImages />
-                                            </button>
+                                            <Link to={`/admin/product/multipleimages/${productData._id}`}>
+                                                <button className="p-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600">
+                                                    <FaImages />
+                                                </button>
+                                            </Link>
                                             <button className="p-2 rounded-lg bg-red-500 text-white hover:bg-red-600">
                                                 <FaTrashAlt />
                                             </button>

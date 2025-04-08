@@ -12,6 +12,7 @@ import ViewProducts from './Admin/pages/products/ViewProducts'
 import AddProducts from './Admin/pages/products/AddProducts'
 import Context from './Context/Context'
 import EditCategoy from './Admin/pages/category/EditCategory'
+import MultipleImage from './Admin/pages/products/MultipleImage'
 
 export default function App() {
 
@@ -62,6 +63,10 @@ export default function App() {
           {
             path: 'product/add',
             element: <AddProducts />
+          },
+          {
+            path: 'product/multipleimages/:product_id',
+            element: <MultipleImage />
           }
         ]
       }

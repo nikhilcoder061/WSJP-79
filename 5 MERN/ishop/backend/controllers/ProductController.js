@@ -166,6 +166,73 @@ class ProductController {
         )
     }
 
+    multipleImage(id, allFiles) {
+        return new Promise(
+            async (resolve, reject) => {
+                try {
+                    const product = await ProductModel.findById(id);
+                    if (product) {
+
+                        let currentImage = product.other_image;
+                        const allNewFiles = Array.isArray(allFiles) ? allFiles : [allFiles];
+
+                        for (let file of allNewFiles) {
+                            const newProductImageName = generateUniqueImageName(file.name);
+                            currentImage.push(newProductImageName);
+                            const destination = "./Public/images/product/" + newProductImageName;
+                            file.mv(destination)
+                        }
+
+                        ProductModel.updateOne(
+                            { _id: id },
+                            {
+                                $set: {
+                                    other_image: currentImage
+                                }
+                            }
+                        ).then(
+                            (success) => {
+                                resolve(
+                                    {
+                                        msg: "Images uploaded succesfullly",
+                                        status: 1
+                                    }
+                                )
+                            }
+                        ).catch(
+                            (error) => {
+                                console.log(error);
+                                reject(
+                                    {
+                                        msg: "Images not uploaded",
+                                        status: 0
+                                    }
+                                )
+                            }
+                        )
+
+                    } else {
+                        reject(
+                            {
+                                msg: "Product not found",
+                                status: 0
+                            }
+                        )
+                    }
+
+                } catch (error) {
+                    console.log(error);
+                    reject(
+                        {
+                            msg: "Internal Server error",
+                            status: 0
+                        }
+                    )
+                }
+            }
+        )
+    }
+
 }
 
 module.exports = ProductController
