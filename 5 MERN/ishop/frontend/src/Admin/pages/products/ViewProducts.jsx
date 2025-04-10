@@ -5,6 +5,8 @@ import { ImCross } from "react-icons/im";
 import axios from 'axios';
 import { FaRegStar } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2'
+import ReactDOMServer from 'react-dom/server';
 
 export default function ViewProducts() {
 
@@ -24,6 +26,21 @@ export default function ViewProducts() {
             }
         )
     }
+
+    // pop up view product start
+
+    const viewProduct = (productData) => {
+
+        const productDetails = ReactDOMServer.renderToString(<ProductPopUp productData={productData} API_BASE_URL={API_BASE_URL} />);
+
+        Swal.fire({
+            title: "<strong>Product Details</strong>",
+            html: productDetails,
+            showCloseButton: true,
+        });
+    }
+
+    // pop up view product end
 
 
     useEffect(
@@ -48,6 +65,8 @@ export default function ViewProducts() {
                 </thead>
                 <tbody>
                     {
+                        Array.isArray(allProduct)
+                        &&
                         allProduct.map(
                             (productData, productIndex) => {
                                 return (
@@ -109,10 +128,12 @@ export default function ViewProducts() {
                                                         <FaRegStar />
                                                 }
                                             </button>
-                                            <button className="p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
-                                                <FaEdit />
-                                            </button>
-                                            <button className="p-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600">
+                                            <Link to={`/admin/product/edit/${productData._id}`}>
+                                                <button className="p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
+                                                    <FaEdit />
+                                                </button>
+                                            </Link>
+                                            <button onClick={() => viewProduct(productData)} className="p-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600">
                                                 <FaEye />
                                             </button>
                                             <Link to={`/admin/product/multipleimages/${productData._id}`}>
@@ -133,5 +154,115 @@ export default function ViewProducts() {
                 </tbody>
             </table>
         </div>
+    )
+}
+
+function ProductPopUp({ productData, API_BASE_URL }) {
+
+    return (
+        <table className="table-auto w-full border border-gray-300">
+            <thead>
+                <tr className="bg-gray-100">
+                    <th className="text-left px-4 py-2 border border-gray-300">Heading</th>
+                    <th className="text-left px-4 py-2 border border-gray-300">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td className="px-4 py-2 border">Id</td>
+                    <td className="px-4 py-2 border">{productData._id}</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Name</td>
+                    <td className="px-4 py-2 border">{productData.name}</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Slug</td>
+                    <td className="px-4 py-2 border">{productData.slug}</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Short Description</td>
+                    <td className="px-4 py-2 border">{productData.short_description}</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Long Description</td>
+                    <td className="px-4 py-2 border">
+                        {productData.long_description}
+                    </td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Original Price</td>
+                    <td className="px-4 py-2 border">${productData.original_price}</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Discount</td>
+                    <td className="px-4 py-2 border">{productData.discount_percentage}%</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Final Price</td>
+                    <td className="px-4 py-2 border">${productData.final_price}</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Category Name</td>
+                    <td className="px-4 py-2 border">Electronics</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Colors</td>
+                    <td className="px-4 py-2 border">Red, Blue, Black</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Main Image</td>
+                    <td className="px-4 py-2 border">
+                        <img
+                            src={API_BASE_URL + `/images/product/${productData.main_image}`}
+                            alt="Main Image"
+                            className="w-20 h-20 object-cover"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Other Images</td>
+                    <td className="px-4 py-2 border">
+                        <div className="flex gap-2">
+                            {
+                                productData.other_image.map(
+                                    (image, index) => {
+                                        return (
+                                            <img
+                                                key={index}
+                                                src={API_BASE_URL + `/images/product/${image}`}
+                                                alt="Other Image 1"
+                                                className="w-16 h-16 object-cover"
+                                            />
+                                        )
+                                    }
+                                )
+                            }
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Stock</td>
+                    <td className="px-4 py-2 border">50</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Status</td>
+                    <td className="px-4 py-2 border">Active</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Top Selling</td>
+                    <td className="px-4 py-2 border">Yes</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Created At</td>
+                    <td className="px-4 py-2 border">2025-04-09</td>
+                </tr>
+                <tr>
+                    <td className="px-4 py-2 border">Updated At</td>
+                    <td className="px-4 py-2 border">2025-04-09</td>
+                </tr>
+            </tbody>
+        </table>
+
     )
 }

@@ -63,7 +63,6 @@ export default function Login() {
     }
 
 
-
     return (
         <div className="bg-gray-100 flex items-center justify-center py-16">
             <div className="bg-white p-8 rounded-lg shadow-lg w-96">

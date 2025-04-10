@@ -94,4 +94,30 @@ ProductRouter.post(
 
 //  multiple image end
 
+// edit Product start 
+ProductRouter.put(
+    '/edit/:id',
+    fileUpload(
+        {
+            createParentPath: true
+        }
+    ),
+    (req, res) => {
+
+        const result = new ProductController().editProduct(req.params.id, req.body, req.files?.main_image);
+        result.then(
+            (success) => {
+                res.send(success);
+            }
+        ).catch(
+            (error) => {
+                res.send(error);
+                console.log(error);
+            }
+        )
+    }
+)
+// edit Product end
+
+
 module.exports = ProductRouter;

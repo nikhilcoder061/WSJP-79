@@ -28,7 +28,6 @@ export default function MultipleImage() {
                 console.log(error);
             }
         )
-
     }
 
     return (

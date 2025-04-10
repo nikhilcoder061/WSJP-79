@@ -233,6 +233,98 @@ class ProductController {
         )
     }
 
+    editProduct(id, data, file) {
+        return new Promise(
+            (resolve, reject) => {
+                try {
+                    if (file) {
+                        const newProductImageName = generateUniqueImageName(file.name);
+                        const destination = "./Public/images/product/" + newProductImageName;
+                        file.mv(
+                            destination,
+                            (error) => {
+                                if (error) {
+                                    reject(
+                                        {
+                                            msg: "Product not updated due to image",
+                                            status: 0
+                                        }
+                                    )
+                                } else {
+                                    ProductModel.updateOne(
+                                        { _id: id },
+                                        {
+                                            $set: {
+                                                ...data,
+                                                color: JSON.parse(data.color),
+                                                main_image: newProductImageName
+                                            }
+                                        }
+                                    ).then(
+                                        (success) => {
+                                            resolve(
+                                                {
+                                                    msg: "Product updated",
+                                                    status: 1
+                                                }
+                                            )
+                                        }
+                                    ).catch(
+                                        (error) => {
+                                            reject(
+                                                {
+                                                    msg: "Product not updated",
+                                                    status: 0
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
+                            }
+                        )
+
+                    } else {
+                        ProductModel.updateOne(
+                            { _id: id },
+                            {
+                                $set: {
+                                    ...data,
+                                    color: JSON.parse(data.color)
+                                }
+                            }
+                        ).then(
+                            (success) => {
+                                resolve(
+                                    {
+                                        msg: "Product updated",
+                                        status: 1
+                                    }
+                                )
+                            }
+                        ).catch(
+                            (error) => {
+                                reject(
+                                    {
+                                        msg: "Product not updated",
+                                        status: 0
+                                    }
+                                )
+                            }
+                        )
+                    }
+                } catch (error) {
+                    console.log(error);
+                    reject(
+                        {
+                            msg: "Internal Server error",
+                            status: 0
+                        }
+                    )
+                }
+            }
+        )
+    }
+
 }
 
 module.exports = ProductController
