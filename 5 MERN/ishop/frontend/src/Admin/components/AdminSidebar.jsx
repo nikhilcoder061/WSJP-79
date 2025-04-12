@@ -1,9 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaHome } from "react-icons/fa";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { IoIosColorPalette } from "react-icons/io";
 import { AiOutlineProduct } from "react-icons/ai";
+import { useSelector } from 'react-redux'
 
 export default function AdminSidebar() {
 
@@ -29,6 +30,20 @@ export default function AdminSidebar() {
       icon: <AiOutlineProduct />
     }
   ]
+
+  const navigate = useNavigate();
+
+  const admin = useSelector((state) => state.admin.data);
+
+  // useEffect(
+  //   () => {
+  //     if (!admin) {
+  //       navigate('/admin/login');
+  //     }
+  //   }, []
+  // )
+
+
 
 
   return (

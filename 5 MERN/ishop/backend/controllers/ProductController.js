@@ -1,4 +1,4 @@
-const generateUniqueImageName = require("../helping");
+const { generateUniqueImageName } = require("../helping");
 const ProductModel = require("../models/ProductModel");
 const ProductRouter = require("../routers/ProductRouter");
 

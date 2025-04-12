@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const mongoose = require('mongoose');
 const server = express();
@@ -5,6 +7,7 @@ const cors = require('cors');
 const CategoryRouter = require('./routers/CategoryRouter');
 const ColorRouter = require('./routers/ColorRouter');
 const ProductRouter = require('./routers/ProductRouter');
+const AdminRouter = require('./routers/AdminRouter');
 
 // middleware
 server.use(express.json());
@@ -18,11 +21,11 @@ server.use(express.static("Public"));
 server.use('/category', CategoryRouter);
 server.use('/color', ColorRouter);
 server.use('/product', ProductRouter);
-
+server.use('/admin', AdminRouter);
 
 
 mongoose.connect(
-    "mongodb://localhost:27017/",
+    process.env.MONGODB_KEY,
     { dbName: 'ishop79' }
 ).then(
     (success) => {
