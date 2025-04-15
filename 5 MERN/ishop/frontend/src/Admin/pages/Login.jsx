@@ -1,11 +1,54 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { MainContext } from '../../Context/Context';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../redux/reducers/AdminSlice';
 
 export default function Login() {
+
+    const { toastNotify, API_BASE_URL } = useContext(MainContext);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const admin = useSelector((state) => state.admin.data);
+
+    const loginAdmin = (event) => {
+        event.preventDefault();
+        const data = {
+            email: event.target.email.value,
+            password: event.target.password.value
+        }
+
+        axios.post(API_BASE_URL + '/admin/login', data).then(
+            (success) => {
+                toastNotify(success.data.msg, success.data.status);
+                dispatch(login(success.data.admin));
+                if (success.data.status == 1) {
+                    navigate('/admin');
+                }
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+            }
+        )
+
+    }
+
+    const lsData = JSON.parse(localStorage.getItem('adminLogin'));
+    useEffect(
+        () => {
+            if (admin || lsData) {
+                navigate('/admin');
+            }
+        }, []
+    )
+
     return (
         <div className='flex justify-center items-center h-screen'>
             <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border">
                 <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Login</h2>
-                <form action="#" method="POST" className="space-y-6">
+                <form className="space-y-6" onSubmit={loginAdmin}>
                     <div>
                         <label
                             htmlFor="email"

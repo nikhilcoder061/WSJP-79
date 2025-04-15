@@ -4,7 +4,8 @@ import { FaHome } from "react-icons/fa";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { IoIosColorPalette } from "react-icons/io";
 import { AiOutlineProduct } from "react-icons/ai";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../redux/reducers/AdminSlice';
 
 export default function AdminSidebar() {
 
@@ -32,17 +33,23 @@ export default function AdminSidebar() {
   ]
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const admin = useSelector((state) => state.admin.data);
+  const lsData = JSON.parse(localStorage.getItem('adminLogin'));
 
-  // useEffect(
-  //   () => {
-  //     if (!admin) {
-  //       navigate('/admin/login');
-  //     }
-  //   }, []
-  // )
+  useEffect(
+    () => {
+      if (!admin && !lsData) {
+        navigate('/admin/login');
+      }
+    }, []
+  )
 
+  const adminLogOut = () => {
+    dispatch(logout());
+    navigate('/admin/login');
+  }
 
 
 
@@ -67,12 +74,11 @@ export default function AdminSidebar() {
         }
       </nav>
       <div className="p-4 border-t border-gray-700">
-        <a
-          href="#"
-          className="block p-3 rounded-lg bg-red-600 hover:bg-red-700 text-center"
+        <span onClick={adminLogOut}
+          className="block p-3 rounded-lg bg-red-600 hover:bg-red-700 text-center cursor-pointer"
         >
           Logout
-        </a>
+        </span>
       </div>
     </div>
 

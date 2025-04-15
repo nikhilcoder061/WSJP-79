@@ -6,11 +6,14 @@ export const AdminSlice = createSlice({
         data: null,
     },
     reducers: {
-        login(state) {
-
+        login(state, current) {
+            localStorage.setItem('adminLogin', JSON.stringify(current.payload));
+            state.data = current.payload;
         },
         logout(state) {
-
+            state.data = null;
+            localStorage.removeItem('adminLogin');
+            
         }
     },
 })
