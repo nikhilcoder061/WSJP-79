@@ -1,4 +1,4 @@
-const { encryptPassword, decryptPassword } = require("../helping");
+const { encryptPassword, decryptPassword, accessToken } = require("../helping");
 const AdminModel = require("../models/AdminModel");
 const AdminRouter = require("../routers/AdminRouter");
 
@@ -70,7 +70,8 @@ class AdminController {
                                 {
                                     msg: "Login Successfully",
                                     status: 1,
-                                    admin: { ...admin.toJSON(), password: null }
+                                    admin: { ...admin.toJSON(), password: null },
+                                    token: accessToken(admin.toJSON())
                                 }
                             )
                         } else {

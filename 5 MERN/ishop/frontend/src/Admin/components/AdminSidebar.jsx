@@ -5,7 +5,7 @@ import { BiSolidCategoryAlt } from "react-icons/bi";
 import { IoIosColorPalette } from "react-icons/io";
 import { AiOutlineProduct } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../redux/reducers/AdminSlice';
+import { login, logout } from '../../redux/reducers/AdminSlice';
 
 export default function AdminSidebar() {
 
@@ -34,14 +34,18 @@ export default function AdminSidebar() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const admin = useSelector((state) => state.admin.data);
+
   const lsData = JSON.parse(localStorage.getItem('adminLogin'));
+  const lsToken = localStorage.getItem('adminToken');
+
 
   useEffect(
     () => {
       if (!admin && !lsData) {
         navigate('/admin/login');
+      } else {
+        dispatch(login({ data: lsData, token: lsToken }))
       }
     }, []
   )
@@ -50,8 +54,6 @@ export default function AdminSidebar() {
     dispatch(logout());
     navigate('/admin/login');
   }
-
-
 
   return (
     <div className="w-64 h-screen bg-gray-900 text-white flex flex-col shadow-lg">

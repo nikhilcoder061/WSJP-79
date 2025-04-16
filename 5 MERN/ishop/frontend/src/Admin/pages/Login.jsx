@@ -22,8 +22,8 @@ export default function Login() {
         axios.post(API_BASE_URL + '/admin/login', data).then(
             (success) => {
                 toastNotify(success.data.msg, success.data.status);
-                dispatch(login(success.data.admin));
                 if (success.data.status == 1) {
+                    dispatch(login({ data: success.data.admin, token: success.data.token }));
                     navigate('/admin');
                 }
             }
@@ -35,9 +35,9 @@ export default function Login() {
 
     }
 
-    const lsData = JSON.parse(localStorage.getItem('adminLogin'));
     useEffect(
         () => {
+            const lsData = JSON.parse(localStorage.getItem('adminLogin'));
             if (admin || lsData) {
                 navigate('/admin');
             }

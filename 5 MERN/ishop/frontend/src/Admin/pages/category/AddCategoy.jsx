@@ -1,11 +1,13 @@
 import React, { useContext, useRef } from 'react'
 import axios from 'axios';
 import { MainContext } from '../../../Context/Context';
+import { useSelector } from 'react-redux';
 
 export default function AddCategoy() {
   const { toastNotify, CATEGORY_URL, API_BASE_URL } = useContext(MainContext);
   const categoryName = useRef();
   const categorySlug = useRef();
+  const token = useSelector((state) => state.admin.token);
 
 
   const createSlug = () => {
@@ -22,7 +24,13 @@ export default function AddCategoy() {
     formData.append("categorySlug", categorySlug.current.value);
     formData.append("categoryImageName", event.target.categoryImageName.files[0])
 
-    axios.post(API_BASE_URL + CATEGORY_URL + "/create", formData).then(
+    axios.post(API_BASE_URL + CATEGORY_URL + "/create", formData,
+      {
+        headers: {
+          Authorization: token
+        }
+      }
+    ).then(
       (success) => {
 
         toastNotify(success.data.msg, success.data.status);
