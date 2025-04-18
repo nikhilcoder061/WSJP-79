@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { MainContext } from '../../../Context/Context'
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import { useSelector } from 'react-redux';
 
 export default function ViewCategory() {
 
@@ -34,7 +35,6 @@ export default function ViewCategory() {
         )
       }
     });
-
   }
 
 

@@ -34,6 +34,7 @@ CategoryRouter.post(
 
 CategoryRouter.get(
     '/:id?',
+    // authAdmin,
     (req, res) => {
         const result = new CategoryController().read(req.params.id);
         result.then(

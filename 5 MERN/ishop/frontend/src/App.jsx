@@ -15,6 +15,8 @@ import EditCategoy from './Admin/pages/category/EditCategory'
 import MultipleImage from './Admin/pages/products/MultipleImage'
 import EditProduct from './Admin/pages/products/EditProduct'
 import Login from './Admin/pages/Login'
+import Home from './Website/pages/Home'
+import Cart from './Website/pages/Cart'
 
 export default function App() {
 
@@ -26,7 +28,15 @@ export default function App() {
         children: [
           {
             path: '/',
+            element: <Home />
+          },
+          {
+            path: '/shop',
             element: <Shop />
+          },
+          {
+            path: '/cart',
+            element: <Cart />
           }
         ]
       },

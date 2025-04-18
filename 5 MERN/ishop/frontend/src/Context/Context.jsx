@@ -1,13 +1,16 @@
 import axios from 'axios';
 import React, { createContext, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
 export const MainContext = createContext();
+
 
 export default function Context({ children }) {
     const [allCategory, setAllCategory] = useState([]);
     const [allColor, setAllColor] = useState([]);
     const [allProduct, setAllProduct] = useState([]);
+    const token = useSelector((state) => state.admin.token)
 
     const API_BASE_URL = "http://localhost:5000";
     const CATEGORY_URL = "/category";
@@ -24,7 +27,7 @@ export default function Context({ children }) {
             categoryApiURL += `/${category_id}`
         }
 
-        axios.get(categoryApiURL).then(
+        axios.get(categoryApiURL, { headers: { Authorization: token } }).then(
             (success) => {
                 setAllCategory(success.data.category);
             }
@@ -58,7 +61,7 @@ export default function Context({ children }) {
     // fetch all color end
 
     // fetch products start
-    const fetchAllProduct = (product_id = null) => {
+    const fetchAllProduct = (product_id = null, limit) => {
 
         let productApiURL = API_BASE_URL + PRODUCT_URL
 
@@ -66,7 +69,10 @@ export default function Context({ children }) {
             productApiURL += `/${product_id}`
         }
 
-        axios.get(productApiURL).then(
+        const query = new URLSearchParams();
+        query.append("limit", limit);
+
+        axios.get(productApiURL + "?" + query).then(
             (success) => {
                 setAllProduct(success.data.product);
             }

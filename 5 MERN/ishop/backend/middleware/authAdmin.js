@@ -1,8 +1,8 @@
 const { verifyToken } = require("../helping");
 
 const authAdmin = (req, res, next) => {
+    console.log(req?.headers?.authorization);
     if (req?.headers?.authorization) {
-
         if (verifyToken(req?.headers?.authorization)) {
             next();
         } else {
@@ -11,7 +11,6 @@ const authAdmin = (req, res, next) => {
                 status: 0
             });
         }
-
     } else {
         res.send({
             msg: "Token not available",

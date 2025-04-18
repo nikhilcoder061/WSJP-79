@@ -4,7 +4,7 @@ const ProductRouter = require("../routers/ProductRouter");
 
 class ProductController {
 
-    read(id) {
+    read(id, query) {
         return new Promise(
             async (resolve, reject) => {
                 try {
@@ -13,7 +13,7 @@ class ProductController {
                     if (id) {
                         product = await ProductModel.findById(id).populate(["category_id", "color"]);
                     } else {
-                        product = await ProductModel.find().populate(["category_id", "color"]);
+                        product = await ProductModel.find().populate(["category_id", "color"]).limit(query.limit);
                     }
                     resolve(
                         {
