@@ -1,4 +1,5 @@
 const { generateUniqueImageName } = require("../helping");
+const CategoryModel = require("../models/CategoryModel");
 const ProductModel = require("../models/ProductModel");
 const ProductRouter = require("../routers/ProductRouter");
 
@@ -8,12 +9,19 @@ class ProductController {
         return new Promise(
             async (resolve, reject) => {
                 try {
+
+                    let newQuery = {};
+                    if (query.categorySlug != "null") {
+                        const category = await CategoryModel.findOne({ categorySlug: query.categorySlug });
+                        newQuery.category_id = category._id;
+                    }
+
                     let product;
 
                     if (id) {
                         product = await ProductModel.findById(id).populate(["category_id", "color"]);
                     } else {
-                        product = await ProductModel.find().populate(["category_id", "color"]).limit(query.limit);
+                        product = await ProductModel.find(newQuery).populate(["category_id", "color"]).limit(query.limit);
                     }
                     resolve(
                         {

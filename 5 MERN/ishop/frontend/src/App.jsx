@@ -31,7 +31,7 @@ export default function App() {
             element: <Home />
           },
           {
-            path: '/shop',
+            path: '/shop/:categorySlug?',
             element: <Shop />
           },
           {

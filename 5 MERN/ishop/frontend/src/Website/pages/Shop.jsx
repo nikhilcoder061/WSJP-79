@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { MainContext } from '../../Context/Context'
-import { useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 export default function Shop() {
 
   const { toastNotify, fetchAllCategory, fetchAllColor, fetchAllProduct, allColor, allCategory, allProduct,
     API_BASE_URL, CATEGORY_URL, COLOR_URL, PRODUCT_URL } = useContext(MainContext);
 
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [serachParams, setSearchParams] = useSearchParams();
+  const { categorySlug } = useParams();
 
   useEffect(
     () => {
@@ -25,8 +26,8 @@ export default function Shop() {
   useEffect(
     () => {
       setSearchParams({ "limit": limit });
-      fetchAllProduct(null, limit);
-    }, [limit]
+      fetchAllProduct(null, limit, categorySlug);
+    }, [limit, categorySlug]
   )
 
   return (
@@ -41,7 +42,12 @@ export default function Shop() {
                 allCategory.map(
                   (category, index) => {
                     return (
-                      <li key={index} className=' hover:bg-gray-200 rounded-md p-2 m-1 cursor-pointer'>{category.categoryName}</li>
+                      <Link to={`/shop/${category.categorySlug}`}>
+                        <li key={index} className=' hover:bg-gray-200 rounded-md p-2 m-1 cursor-pointer flex justify-between'>
+                          <span> {category.categoryName}</span>
+                          <span> ({category.productCount})</span>
+                        </li>
+                      </Link>
                     )
                   }
                 )

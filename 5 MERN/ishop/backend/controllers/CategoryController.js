@@ -1,5 +1,6 @@
 const { generateUniqueImageName } = require("../helping");
 const CategoryModel = require("../models/CategoryModel");
+const ProductModel = require("../models/ProductModel");
 const CategoryRouter = require("../routers/CategoryRouter");
 
 class CategoryController {
@@ -80,17 +81,33 @@ class CategoryController {
 
                     if (id) {
                         category = await CategoryModel.findById(id);
+                        resolve(
+                            {
+                                msg: "Category Found",
+                                status: 1,
+                                category
+                            }
+                        )
                     } else {
                         category = await CategoryModel.find();
-                    }
-                    resolve(
-                        {
-                            msg: "Category Found",
-                            status: 1,
-                            category
-                        }
-                    )
+                        const data = [];
+                        const allPromise = category.map(
+                            async (cat, index) => {
+                                const productCount = await ProductModel.find({ category_id: cat._id }).countDocuments();
+                                data.push({ ...cat.toJSON(), productCount });
+                            }
+                        )
 
+                        await Promise.all(allPromise);
+
+                        resolve(
+                            {
+                                msg: "Category Found",
+                                status: 1,
+                                category:data
+                            }
+                        )
+                    }
                 } catch (error) {
                     console.log(error);
                     reject(

@@ -61,7 +61,7 @@ export default function Context({ children }) {
     // fetch all color end
 
     // fetch products start
-    const fetchAllProduct = (product_id = null, limit) => {
+    const fetchAllProduct = (product_id = null, limit = 0, categorySlug = null) => {
 
         let productApiURL = API_BASE_URL + PRODUCT_URL
 
@@ -71,6 +71,7 @@ export default function Context({ children }) {
 
         const query = new URLSearchParams();
         query.append("limit", limit);
+        query.append("categorySlug", categorySlug);
 
         axios.get(productApiURL + "?" + query).then(
             (success) => {
