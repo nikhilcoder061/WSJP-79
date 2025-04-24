@@ -17,6 +17,9 @@ import EditProduct from './Admin/pages/products/EditProduct'
 import Login from './Admin/pages/Login'
 import Home from './Website/pages/Home'
 import Cart from './Website/pages/Cart'
+import CheckOut from './Website/pages/CheckOut'
+import UserLogin from './Website/pages/UserLogin'
+import UserRegister from './Website/pages/UserRegister'
 
 export default function App() {
 
@@ -37,8 +40,20 @@ export default function App() {
           {
             path: '/cart',
             element: <Cart />
+          },
+          {
+            path: '/checkout',
+            element: <CheckOut />
           }
         ]
+      },
+      {
+        path: '/userlogin',
+        element: <UserLogin />
+      },
+      {
+        path: '/userregister',
+        element: <UserRegister />
       },
       {
         path: '/admin',

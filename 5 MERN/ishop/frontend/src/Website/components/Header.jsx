@@ -1,20 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaUser, FaShoppingCart } from "react-icons/fa"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../redux/reducers/UserSlice';
 
 export default function Header() {
+
+    const cart = useSelector((state) => state.cart.data);
+    const user = useSelector((state) => state.user.data);
     return (
-        <header className="w-full border-b">
+        <header className="w-full border-b sticky top-0 bg-white">
             {/* Row 1: Profile and Cart Icons */}
             <div className="flex justify-end items-center p-4 gap-6 ">
+                <div className="flex items-center gap-2 cursor-pointer">
+                    <span className="text-sm font-medium">Hello, {user?.name}</span>
+                </div>
                 <div className="flex items-center gap-2 cursor-pointer">
                     <FaUser className="text-xl" />
                     <span className="text-sm font-medium">Profile</span>
                 </div>
-                <div className="flex items-center gap-2 cursor-pointer">
-                    <FaShoppingCart className="text-xl" />
-                    <span className="text-sm font-medium">Cart</span>
-                </div>
+                <Link to={'/cart'}>
+                    <div className="flex items-center gap-2 cursor-pointer">
+                        <FaShoppingCart className="text-xl" />
+                        <span className="text-sm font-medium">Cart({cart.length})</span>
+                    </div>
+                </Link>
             </div>
 
             {/* Row 2: Logo */}

@@ -9,12 +9,18 @@ class ProductController {
         return new Promise(
             async (resolve, reject) => {
                 try {
-
                     let newQuery = {};
                     if (query.categorySlug != "null") {
                         const category = await CategoryModel.findOne({ categorySlug: query.categorySlug });
-                        newQuery.category_id = category._id;
+                        if (category) {
+                            newQuery.category_id = category._id;
+                        }
                     }
+
+                    if (query.productColor != "null") {
+                        newQuery.color = query.productColor;
+                    }
+
 
                     let product;
 

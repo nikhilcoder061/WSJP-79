@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { MainContext } from '../../Context/Context'
 import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../redux/reducers/CartSlice';
 
 export default function Shop() {
 
@@ -10,6 +12,7 @@ export default function Shop() {
   const [limit, setLimit] = useState(10);
   const [serachParams, setSearchParams] = useSearchParams();
   const { categorySlug } = useParams();
+  const [productColor, setProductColor] = useState(null);
 
   useEffect(
     () => {
@@ -25,9 +28,14 @@ export default function Shop() {
 
   useEffect(
     () => {
-      setSearchParams({ "limit": limit });
-      fetchAllProduct(null, limit, categorySlug);
-    }, [limit, categorySlug]
+      const query = {};
+      if (productColor) {
+        query.productColor = productColor
+      }
+      query.limit = limit
+      setSearchParams(query);
+      fetchAllProduct(null, limit, categorySlug, productColor);
+    }, [limit, categorySlug, productColor]
   )
 
   return (
@@ -42,7 +50,7 @@ export default function Shop() {
                 allCategory.map(
                   (category, index) => {
                     return (
-                      <Link to={`/shop/${category.categorySlug}`}>
+                      <Link to={`/shop/${category.categorySlug}`} key={index}>
                         <li key={index} className=' hover:bg-gray-200 rounded-md p-2 m-1 cursor-pointer flex justify-between'>
                           <span> {category.categoryName}</span>
                           <span> ({category.productCount})</span>
@@ -62,7 +70,7 @@ export default function Shop() {
                 allColor.map(
                   (color, index) => {
                     return (
-                      <li key={index} className=' hover:bg-gray-200 rounded-md p-2 m-1 cursor-pointer flex justify-between items-center'>
+                      <li onClick={() => setProductColor(color._id)} key={index} className=' hover:bg-gray-200 rounded-md p-2 m-1 cursor-pointer flex justify-between items-center'>
                         <span className='block'>{color.colorName}</span>
                         <span className='w-4 h-4 block rounded-full' style={{ background: color.colorCode }}></span>
                       </li>
@@ -105,6 +113,9 @@ export default function Shop() {
 }
 
 function ProductCard({ product, index, API_BASE_URL }) {
+
+  const dispatch = useDispatch();
+
   return (
     <div className="w-[300px]  bg-white rounded-2xl shadow-lg overflow-hidden p-4">
       {/* Product Image */}
@@ -129,7 +140,7 @@ function ProductCard({ product, index, API_BASE_URL }) {
         </div>
 
         {/* Add to Cart Button */}
-        <button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl transition">
+        <button onClick={() => dispatch(addToCart({ product_id: product._id }))} className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl transition">
           Add to Cart
         </button>
       </div>
