@@ -12,13 +12,25 @@ export default function Header() {
         <header className="w-full border-b sticky top-0 bg-white">
             {/* Row 1: Profile and Cart Icons */}
             <div className="flex justify-end items-center p-4 gap-6 ">
-                <div className="flex items-center gap-2 cursor-pointer">
-                    <span className="text-sm font-medium">Hello, {user?.name}</span>
-                </div>
-                <div className="flex items-center gap-2 cursor-pointer">
-                    <FaUser className="text-xl" />
-                    <span className="text-sm font-medium">Profile</span>
-                </div>
+                {
+                    user ?
+                        <>
+                            <div className="flex items-center gap-2 cursor-pointer">
+                                <span className="text-sm font-medium">Hello, {user?.name}</span>
+                            </div>
+                            <div className="flex items-center gap-2 cursor-pointer">
+                                <FaUser className="text-xl" />
+                                <span className="text-sm font-medium">Profile</span>
+                            </div>
+                        </>
+                        :
+                        <Link to={`/userlogin?ref=home`}>
+                            <div className="flex items-center gap-2 cursor-pointer">
+                                <FaUser className="text-xl" />
+                                <span className="text-sm font-medium">Login</span>
+                            </div>
+                        </Link>
+                }
                 <Link to={'/cart'}>
                     <div className="flex items-center gap-2 cursor-pointer">
                         <FaShoppingCart className="text-xl" />

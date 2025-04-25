@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { MainContext } from '../../Context/Context';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -10,6 +10,7 @@ export default function UserRegister() {
     const { toastNotify, API_BASE_URL } = useContext(MainContext);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const userRegister = (event) => {
 
@@ -80,7 +81,7 @@ export default function UserRegister() {
                 </form>
                 <p className="text-sm text-center">
                     Already have an account?
-                    <Link to={'/userlogin'}>
+                    <Link to={`/userlogin?${searchParams.toString()}`}>
                         <span className="text-blue-500 hover:underline">
                             Login
                         </span>

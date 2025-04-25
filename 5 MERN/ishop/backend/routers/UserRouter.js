@@ -40,5 +40,24 @@ UserRouter.post(
 )
 // login admin end
 
+// move to DB admin start 
+UserRouter.post(
+    '/movetodb/:userId',
+    (req, res) => {
+        const result = new UserController().moveToDb(req.body, req.params.userId);
+        result.then(
+            (success) => {
+                res.send(success);
+            }
+        ).catch(
+            (error) => {
+                res.send(error);
+                console.log(error);
+            }
+        )
+    }
+)
+// move to DB admin end
+
 
 module.exports = UserRouter;

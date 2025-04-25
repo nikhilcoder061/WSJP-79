@@ -17,7 +17,7 @@ export default function Cart() {
     if (user) {
       navigate('/checkout');
     } else {
-      navigate('/userlogin');
+      navigate('/userlogin?ref=cart');
     }
   }
 

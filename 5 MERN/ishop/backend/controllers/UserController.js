@@ -1,4 +1,5 @@
 const { encryptPassword, decryptPassword, accessToken } = require("../helping");
+const CartModel = require("../models/CartModel");
 const UserModel = require("../models/UserModel");
 const UserRouter = require("../routers/UserRouter");
 
@@ -92,6 +93,73 @@ class UserController {
                             }
                         )
                     }
+                } catch (error) {
+                    console.log(error);
+                    reject(
+                        {
+                            msg: "Internal Server error",
+                            status: 0
+                        }
+                    )
+                }
+            }
+        )
+    }
+    moveToDb(data, userId) {
+        return new Promise(
+            async (resolve, reject) => {
+                try {
+                    if (data) {
+                        const allPromise = data.map(
+                            async (cartItem, cartIndex) => {
+                                const existingProduct = await CartModel.findOne({ product_id: cartItem.product_id, user_id: userId }) ?? null;
+                                if (existingProduct) {
+                                    // update product qty in cart
+
+                                    CartModel.updateOne(
+                                        { _id: existingProduct._id },
+                                        {
+                                            $inc: {
+                                                qty: cartItem.qty
+                                            }
+                                        }
+                                    ).then(
+                                        (success) => {
+                                            console.log(success);
+                                        }
+                                    ).catch(
+                                        (error) => {
+                                            console.log(error);
+                                        }
+                                    )
+
+
+                                } else {
+                                    // new product create in cart
+                                    new CartModel(
+                                        {
+                                            user_id: userId,
+                                            product_id: cartItem.product_id,
+                                            qty: Number(cartItem.qty)
+                                        }
+                                    ).save().then(
+                                        (success) => {
+                                            console.log(success);
+                                        }
+                                    ).catch(
+                                        (error) => {
+                                            console.log(error);
+                                        }
+                                    )
+                                }
+
+                            }
+                        )
+                        await Promise.all(allPromise);
+                    } else {
+                        console.log("Cart is empty");
+                    }
+
                 } catch (error) {
                     console.log(error);
                     reject(
