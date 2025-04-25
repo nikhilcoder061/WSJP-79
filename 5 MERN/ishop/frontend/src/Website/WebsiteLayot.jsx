@@ -12,15 +12,15 @@ export default function WebsiteLayot() {
 
   const user = useSelector((state) => state.user.data);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const lsData = JSON.parse(localStorage.getItem('userLogin'));
-  const lsToken = localStorage.getItem('userToken');
 
   useEffect(
     () => {
-      dispatch(login())
+      const lsData = JSON.parse(localStorage.getItem('userLogin'));
+      const lsToken = localStorage.getItem('userToken');
+      if (lsData) {
+        dispatch(login({ data: lsData, token: lsToken }));
+      }
     }, []
   )
 
