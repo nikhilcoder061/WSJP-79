@@ -4,6 +4,8 @@ export const CartSlice = createSlice({
     name: 'cart',
     initialState: {
         data: [],
+        totalOriginalPrice: 0,
+        totalFinalPrice: 0
     },
     reducers: {
         addToCart(state, current) {
@@ -15,10 +17,22 @@ export const CartSlice = createSlice({
                 state.data.push({ product_id: current.payload.product_id, qty: 1 });
             }
 
-            localStorage.setItem("cartItem", JSON.stringify(state.data));
-        },
-        removeToCart(state) {
+            state.totalOriginalPrice += current.payload.original_price
+            state.totalFinalPrice += current.payload.final_price
 
+            localStorage.setItem("cartItem", JSON.stringify(state.data));
+            localStorage.setItem("totalOriginalPrice", state.totalOriginalPrice);
+            localStorage.setItem("totalFinalPrice", state.totalFinalPrice);
+        },
+
+        moveToCart(state, { payload }) {
+            state.data = payload.data;
+            state.totalOriginalPrice = payload.totalOriginalPrice
+            state.totalFinalPrice = payload.totalFinalPrice
+
+            localStorage.setItem("cartItem", JSON.stringify(state.data));
+            localStorage.setItem("totalOriginalPrice", state.totalOriginalPrice);
+            localStorage.setItem("totalFinalPrice", state.totalFinalPrice);
         },
 
         lsGetdata(state) {
@@ -29,6 +43,6 @@ export const CartSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addToCart, removeToCart, lsGetdata } = CartSlice.actions
+export const { addToCart, removeToCart, lsGetdata, moveToCart } = CartSlice.actions
 
 export default CartSlice.reducer

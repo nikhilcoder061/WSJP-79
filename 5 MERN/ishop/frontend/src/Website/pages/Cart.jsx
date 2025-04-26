@@ -10,7 +10,7 @@ export default function Cart() {
   const user = useSelector((state) => state.user.data);
   const navigate = useNavigate();
 
-  console.log(user);
+  console.log(cartData);
 
 
   const verifyLogin = () => {

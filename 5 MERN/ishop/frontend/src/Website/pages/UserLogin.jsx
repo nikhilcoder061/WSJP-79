@@ -4,6 +4,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { MainContext } from '../../Context/Context';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/reducers/UserSlice';
+import { moveToCart } from '../../redux/reducers/CartSlice';
 
 export default function UserLogin() {
 
@@ -26,13 +27,29 @@ export default function UserLogin() {
         axios.post(API_BASE_URL + '/user/login', data).then(
             (success) => {
                 toastNotify(success.data.msg, success.data.status);
-                console.log(success);
                 if (success.data.status == 1) {
                     dispatch(login({ data: success.data.user, token: success.data.token }));
 
                     axios.post(API_BASE_URL + `/user/movetodb/${success.data.user._id}`, cart).then(
                         (res) => {
-                            console.log(res);
+                            const latestCart = res.data.latestCart;
+                            let totalOriginalPrice = 0;
+                            let totalFinalPrice = 0;
+
+                            const data = latestCart.map((cartItem, cartIndex) => {
+                                totalOriginalPrice += cartItem.product_id.original_price * cartItem.qty;
+                                totalFinalPrice += cartItem.product_id.final_price * cartItem.qty;
+                                return (
+                                    {
+                                        product_id: cartItem.product_id,
+                                        qty: cartItem.qty
+                                    }
+                                )
+                            })
+
+                            dispatch(moveToCart({ data, totalOriginalPrice, totalFinalPrice }))
+
+
                         }
                     ).catch(
                         (err) => {

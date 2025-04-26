@@ -156,6 +156,18 @@ class UserController {
                             }
                         )
                         await Promise.all(allPromise);
+
+                        const latestCart = await CartModel.find({ user_id: userId }).populate("product_id", "_id original_price final_price ");
+
+                        resolve(
+                            {
+                                latestCart: latestCart,
+                                msg: "Move to cart successfully",
+                                status: 1
+                            }
+                        )
+
+
                     } else {
                         console.log("Cart is empty");
                     }

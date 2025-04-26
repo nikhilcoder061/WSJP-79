@@ -140,7 +140,7 @@ function ProductCard({ product, index, API_BASE_URL }) {
         </div>
 
         {/* Add to Cart Button */}
-        <button onClick={() => dispatch(addToCart({ product_id: product._id }))} className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl transition">
+        <button onClick={() => dispatch(addToCart({ product_id: product._id, original_price: product.original_price, final_price: product.final_price }))} className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl transition">
           Add to Cart
         </button>
       </div>
