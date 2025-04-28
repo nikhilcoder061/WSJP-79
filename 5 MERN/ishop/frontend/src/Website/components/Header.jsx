@@ -8,6 +8,12 @@ export default function Header() {
 
     const cart = useSelector((state) => state.cart.data);
     const user = useSelector((state) => state.user.data);
+
+    const logout = () => {
+        localStorage.clear();
+        location.reload();
+    }
+
     return (
         <header className="w-full border-b sticky top-0 bg-white">
             {/* Row 1: Profile and Cart Icons */}
@@ -21,6 +27,9 @@ export default function Header() {
                             <div className="flex items-center gap-2 cursor-pointer">
                                 <FaUser className="text-xl" />
                                 <span className="text-sm font-medium">Profile</span>
+                            </div>
+                            <div className="flex items-center gap-2 cursor-pointer" onClick={logout}>
+                                <span className="text-sm font-medium text-red-500">Logout</span>
                             </div>
                         </>
                         :
@@ -37,6 +46,7 @@ export default function Header() {
                         <span className="text-sm font-medium">Cart({cart.length})</span>
                     </div>
                 </Link>
+
             </div>
 
             {/* Row 2: Logo */}

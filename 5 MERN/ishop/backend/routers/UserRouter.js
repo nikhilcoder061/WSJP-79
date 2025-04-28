@@ -59,5 +59,24 @@ UserRouter.post(
 )
 // move to DB admin end
 
+// add to cart start 
+UserRouter.post(
+    '/addtocart',
+    (req, res) => {
+        const result = new UserController().addToCart(req.body);
+        result.then(
+            (success) => {
+                res.send(success);
+            }
+        ).catch(
+            (error) => {
+                res.send(error);
+                console.log(error);
+            }
+        )
+    }
+)
+// add to cart end
+
 
 module.exports = UserRouter;

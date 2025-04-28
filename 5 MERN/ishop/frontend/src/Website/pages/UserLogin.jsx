@@ -14,8 +14,6 @@ export default function UserLogin() {
     const [searchParams, setSearchParams] = useSearchParams();
     const cart = useSelector((state) => state.cart.data);
 
-    console.log(searchParams.get('ref'));
-
     const userLogin = (event) => {
         event.preventDefault();
 
@@ -35,21 +33,26 @@ export default function UserLogin() {
                             const latestCart = res.data.latestCart;
                             let totalOriginalPrice = 0;
                             let totalFinalPrice = 0;
+                            console.log(latestCart);
 
                             const data = latestCart.map((cartItem, cartIndex) => {
                                 totalOriginalPrice += cartItem.product_id.original_price * cartItem.qty;
                                 totalFinalPrice += cartItem.product_id.final_price * cartItem.qty;
                                 return (
                                     {
-                                        product_id: cartItem.product_id,
+                                        product_id: cartItem.product_id._id,
                                         qty: cartItem.qty
                                     }
                                 )
                             })
 
-                            dispatch(moveToCart({ data, totalOriginalPrice, totalFinalPrice }))
+                            dispatch(moveToCart({ data, totalOriginalPrice, totalFinalPrice }));
 
 
+
+                            // localStorage.setItem("cartItem", JSON.stringify(data));
+                            // localStorage.setItem("totalOriginalPrice", totalOriginalPrice);
+                            // localStorage.setItem("totalFinalPrice", totalFinalPrice);
                         }
                     ).catch(
                         (err) => {

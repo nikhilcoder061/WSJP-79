@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { MainContext } from '../../Context/Context'
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/reducers/CartSlice';
+import axios from 'axios';
 
 export default function Shop() {
 
@@ -115,6 +116,25 @@ export default function Shop() {
 function ProductCard({ product, index, API_BASE_URL }) {
 
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.data);
+
+  const handleAddToCart = (data) => {
+    dispatch(addToCart(data));
+    if (user) {
+      axios.post(API_BASE_URL + '/user/addtocart', {
+        user_id: user._id,
+        product_id: product._id
+      }).then(
+        (success) => {
+          console.log(success);
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
+  }
 
   return (
     <div className="w-[300px]  bg-white rounded-2xl shadow-lg overflow-hidden p-4">
@@ -140,10 +160,16 @@ function ProductCard({ product, index, API_BASE_URL }) {
         </div>
 
         {/* Add to Cart Button */}
-        <button onClick={() => dispatch(addToCart({ product_id: product._id, original_price: product.original_price, final_price: product.final_price }))} className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl transition">
+        <button onClick={() => handleAddToCart(
+          {
+            product_id: product._id,
+            original_price: product.original_price,
+            final_price: product.final_price
+          }
+        )} className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl transition">
           Add to Cart
         </button>
       </div>
-    </div>
+    </div >
   )
 }

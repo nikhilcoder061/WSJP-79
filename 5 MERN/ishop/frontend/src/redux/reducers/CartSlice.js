@@ -27,8 +27,8 @@ export const CartSlice = createSlice({
 
         moveToCart(state, { payload }) {
             state.data = payload.data;
-            state.totalOriginalPrice = payload.totalOriginalPrice
-            state.totalFinalPrice = payload.totalFinalPrice
+            state.totalOriginalPrice = Number(payload.totalOriginalPrice)
+            state.totalFinalPrice = Number(payload.totalFinalPrice)
 
             localStorage.setItem("cartItem", JSON.stringify(state.data));
             localStorage.setItem("totalOriginalPrice", state.totalOriginalPrice);
@@ -37,7 +37,11 @@ export const CartSlice = createSlice({
 
         lsGetdata(state) {
             const oldCartData = JSON.parse(localStorage.getItem("cartItem")) ?? [];
+            const totalOriginalPrice = localStorage.getItem('totalOriginalPrice');
+            const totalFinalPrice = localStorage.getItem('totalFinalPrice');
             state.data = oldCartData;
+            state.totalOriginalPrice = Number(totalOriginalPrice);
+            state.totalFinalPrice = Number(totalFinalPrice);
         }
     },
 })

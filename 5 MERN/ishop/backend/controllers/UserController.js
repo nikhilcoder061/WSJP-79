@@ -116,11 +116,11 @@ class UserController {
                                 if (existingProduct) {
                                     // update product qty in cart
 
-                                    CartModel.updateOne(
+                                    await CartModel.updateOne(
                                         { _id: existingProduct._id },
                                         {
                                             $inc: {
-                                                qty: cartItem.qty
+                                                qty: Number(cartItem.qty)
                                             }
                                         }
                                     ).then(
@@ -136,7 +136,7 @@ class UserController {
 
                                 } else {
                                     // new product create in cart
-                                    new CartModel(
+                                    await new CartModel(
                                         {
                                             user_id: userId,
                                             product_id: cartItem.product_id,
@@ -158,7 +158,7 @@ class UserController {
                         await Promise.all(allPromise);
 
                         const latestCart = await CartModel.find({ user_id: userId }).populate("product_id", "_id original_price final_price ");
-
+                        console.log(latestCart);
                         resolve(
                             {
                                 latestCart: latestCart,
@@ -172,6 +172,59 @@ class UserController {
                         console.log("Cart is empty");
                     }
 
+                } catch (error) {
+                    console.log(error);
+                    reject(
+                        {
+                            msg: "Internal Server error",
+                            status: 0
+                        }
+                    )
+                }
+            }
+        )
+    }
+
+    addToCart(data) {
+        return new Promise(
+            async (resolve, reject) => {
+                try {
+                    const existingProduct = await CartModel.findOne({ user_id: data.user_id, product_id: data.product_id });
+                    if (existingProduct) {
+
+                        await CartModel.updateOne({ _id: existingProduct._id },
+                            {
+                                $inc: {
+                                    qty: 1
+                                }
+                            }
+                        ).then(
+                            (success) => {
+                                console.log(success);
+                            }
+                        ).catch(
+                            (error) => {
+                                console.log(error);
+                            }
+                        )
+
+                    } else {
+                        await new CartModel(
+                            {
+                                user_id: data.user_id,
+                                product_id: data.product_id,
+                                qty: 1
+                            }
+                        ).save().then(
+                            (success) => {
+                                console.log(success);
+                            }
+                        ).catch(
+                            (error) => {
+                                console.log(error);
+                            }
+                        )
+                    }
                 } catch (error) {
                     console.log(error);
                     reject(

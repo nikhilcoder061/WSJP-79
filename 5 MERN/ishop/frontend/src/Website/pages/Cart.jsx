@@ -1,17 +1,19 @@
 import React, { useContext, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { MainContext } from '../../Context/Context';
 import { useNavigate } from 'react-router-dom'
+import { lsGetdata } from '../../redux/reducers/CartSlice';
 
 export default function Cart() {
 
   const { API_BASE_URL, fetchAllProduct, allProduct } = useContext(MainContext);
-  const cartData = useSelector((state) => state.cart.data);
+  const cartData = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user.data);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   console.log(cartData);
-
 
   const verifyLogin = () => {
     if (user) {
@@ -25,6 +27,7 @@ export default function Cart() {
   useEffect(
     () => {
       fetchAllProduct();
+      dispatch(lsGetdata());
     }, []
   )
 
@@ -36,11 +39,12 @@ export default function Cart() {
         <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
         {/* Cart Item */}
         {
-          cartData.map(
+          cartData.data.map(
             (cartItem, cartIndex) => {
               const availableCartData = allProduct.find((product) => product._id == cartItem.product_id);
+
               return (
-                <div className="flex items-center bg-white p-4 rounded-lg shadow-md border">
+                <div key={cartIndex} className="flex items-center bg-white p-4 rounded-lg shadow-md border">
                   <img
                     src={API_BASE_URL + `/images/product/${availableCartData?.main_image}`}
                     alt="Product"
@@ -79,16 +83,16 @@ export default function Cart() {
         <h2 className="text-xl font-bold mb-4">Summary</h2>
         <div className="space-y-2">
           <div className="flex justify-between">
-            <span>Subtotal</span>
-            <span>$49.99</span>
+            <span>Subtotal Before Discount</span>
+            <span>${cartData.totalOriginalPrice}</span>
           </div>
-          <div className="flex justify-between">
-            <span>Tax</span>
-            <span>$4.99</span>
+          <div className="flex justify-between text-green-500 font-bold">
+            <span> Discount</span>
+            <span>${cartData.totalOriginalPrice - cartData.totalFinalPrice}</span>
           </div>
           <div className="flex justify-between font-bold text-lg">
             <span>Total</span>
-            <span>$54.98</span>
+            <span>${cartData.totalFinalPrice}</span>
           </div>
         </div>
         <button onClick={verifyLogin} className="w-full mt-6 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
