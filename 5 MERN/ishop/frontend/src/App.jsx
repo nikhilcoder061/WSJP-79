@@ -20,6 +20,7 @@ import Cart from './Website/pages/Cart'
 import CheckOut from './Website/pages/CheckOut'
 import UserLogin from './Website/pages/UserLogin'
 import UserRegister from './Website/pages/UserRegister'
+import Thankyou from './Website/pages/Thankyou'
 
 export default function App() {
 
@@ -44,6 +45,10 @@ export default function App() {
           {
             path: '/checkout',
             element: <CheckOut />
+          },
+          {
+            path: '/thankyou/:order_id',
+            element: <Thankyou />
           }
         ]
       },

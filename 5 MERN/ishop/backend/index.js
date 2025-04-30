@@ -9,6 +9,7 @@ const ColorRouter = require('./routers/ColorRouter');
 const ProductRouter = require('./routers/ProductRouter');
 const AdminRouter = require('./routers/AdminRouter');
 const UserRouter = require('./routers/UserRouter');
+const OrderRouter = require('./routers/OrderRouter');
 
 // middleware
 server.use(express.json());
@@ -24,6 +25,7 @@ server.use('/color', ColorRouter);
 server.use('/product', ProductRouter);
 server.use('/admin', AdminRouter);
 server.use('/user', UserRouter);
+server.use('/order', OrderRouter);
 
 
 

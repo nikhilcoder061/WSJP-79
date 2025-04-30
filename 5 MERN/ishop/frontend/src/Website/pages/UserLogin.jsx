@@ -48,11 +48,6 @@ export default function UserLogin() {
 
                             dispatch(moveToCart({ data, totalOriginalPrice, totalFinalPrice }));
 
-
-
-                            // localStorage.setItem("cartItem", JSON.stringify(data));
-                            // localStorage.setItem("totalOriginalPrice", totalOriginalPrice);
-                            // localStorage.setItem("totalFinalPrice", totalFinalPrice);
                         }
                     ).catch(
                         (err) => {
